@@ -1,6 +1,6 @@
 {
   "meta": {
-    "exportedAt": "2026-06-07T15:51:57.040742+00:00"
+    "exportedAt": "2026-06-07T15:55:46.282291+00:00"
   },
   "tournaments": [
     {
@@ -1926,7 +1926,7 @@
     {
       "id": "tournament_1710000000",
       "name": "Liga Cone #4",
-      "date": "2025-11-09",
+      "date": "2026-07-12",
       "maxRounds": 4,
       "organizer": "Cone",
       "pairing": "auto",
@@ -1941,12 +1941,12 @@
             {
               "name": "Ricardo",
               "decklink": "https://moxfield.com/decks/alpha1",
-              "deckPrice": 290.07
+              "deckPrice": 495.54
             },
             {
               "name": "Thiago",
               "decklink": "https://moxfield.com/decks/alpha2",
-              "deckPrice": 184.04
+              "deckPrice": 249.47
             }
           ],
           "confirmed": true
@@ -1959,15 +1959,15 @@
             {
               "name": "Marcos",
               "decklink": "https://moxfield.com/decks/beta1",
-              "deckPrice": 172.98
+              "deckPrice": 205.06
             },
             {
               "name": "Felipe",
               "decklink": "https://moxfield.com/decks/beta2",
-              "deckPrice": 209.18
+              "deckPrice": 507.73
             }
           ],
-          "confirmed": false
+          "confirmed": true
         },
         {
           "id": "d_gamma",
@@ -1977,15 +1977,15 @@
             {
               "name": "Lucas",
               "decklink": "https://moxfield.com/decks/gamma1",
-              "deckPrice": 475.14
+              "deckPrice": 139.83
             },
             {
               "name": "André",
               "decklink": "https://moxfield.com/decks/gamma2",
-              "deckPrice": 210.6
+              "deckPrice": 327.64
             }
           ],
-          "confirmed": true
+          "confirmed": false
         },
         {
           "id": "d_delta",
@@ -1995,15 +1995,15 @@
             {
               "name": "Vinícius",
               "decklink": "https://moxfield.com/decks/delta1",
-              "deckPrice": 279.2
+              "deckPrice": 370.11
             },
             {
               "name": "Gabriel",
               "decklink": "https://moxfield.com/decks/delta2",
-              "deckPrice": 435.84
+              "deckPrice": 397.89
             }
           ],
-          "confirmed": true
+          "confirmed": false
         }
       ],
       "rounds": [],
@@ -2012,7 +2012,7 @@
     {
       "id": "tournament_1711000000",
       "name": "Liga Cone #5",
-      "date": "2025-12-14",
+      "date": "2026-08-09",
       "maxRounds": 4,
       "organizer": "Cone",
       "pairing": "auto",
@@ -2027,15 +2027,15 @@
             {
               "name": "Ricardo",
               "decklink": "https://moxfield.com/decks/alpha1",
-              "deckPrice": 299.25
+              "deckPrice": 94.74
             },
             {
               "name": "Thiago",
               "decklink": "https://moxfield.com/decks/alpha2",
-              "deckPrice": 398.87
+              "deckPrice": 577.73
             }
           ],
-          "confirmed": true
+          "confirmed": false
         },
         {
           "id": "d_beta",
@@ -2045,15 +2045,15 @@
             {
               "name": "Marcos",
               "decklink": "https://moxfield.com/decks/beta1",
-              "deckPrice": 192.68
+              "deckPrice": 169.79
             },
             {
               "name": "Felipe",
               "decklink": "https://moxfield.com/decks/beta2",
-              "deckPrice": 549.04
+              "deckPrice": 502.94
             }
           ],
-          "confirmed": true
+          "confirmed": false
         },
         {
           "id": "d_gamma",
@@ -2063,15 +2063,15 @@
             {
               "name": "Lucas",
               "decklink": "https://moxfield.com/decks/gamma1",
-              "deckPrice": 274.47
+              "deckPrice": 343.8
             },
             {
               "name": "André",
               "decklink": "https://moxfield.com/decks/gamma2",
-              "deckPrice": 281.82
+              "deckPrice": 514.56
             }
           ],
-          "confirmed": false
+          "confirmed": true
         },
         {
           "id": "d_delta",
@@ -2081,15 +2081,15 @@
             {
               "name": "Vinícius",
               "decklink": "https://moxfield.com/decks/delta1",
-              "deckPrice": 434.83
+              "deckPrice": 175.09
             },
             {
               "name": "Gabriel",
               "decklink": "https://moxfield.com/decks/delta2",
-              "deckPrice": 159.18
+              "deckPrice": 247.17
             }
           ],
-          "confirmed": false
+          "confirmed": true
         }
       ],
       "rounds": [],
@@ -2098,7 +2098,7 @@
     {
       "id": "tournament_1712000000",
       "name": "Grand Prix Fim de Ano",
-      "date": "2026-01-11",
+      "date": "2026-09-13",
       "maxRounds": 4,
       "organizer": "Cone",
       "pairing": "auto",
@@ -2113,15 +2113,15 @@
             {
               "name": "Ricardo",
               "decklink": "https://moxfield.com/decks/alpha1",
-              "deckPrice": 572.37
+              "deckPrice": 324.23
             },
             {
               "name": "Thiago",
               "decklink": "https://moxfield.com/decks/alpha2",
-              "deckPrice": 354.93
+              "deckPrice": 197.31
             }
           ],
-          "confirmed": true
+          "confirmed": false
         },
         {
           "id": "d_beta",
@@ -2131,12 +2131,12 @@
             {
               "name": "Marcos",
               "decklink": "https://moxfield.com/decks/beta1",
-              "deckPrice": 482.73
+              "deckPrice": 117.38
             },
             {
               "name": "Felipe",
               "decklink": "https://moxfield.com/decks/beta2",
-              "deckPrice": 323.9
+              "deckPrice": 519.6
             }
           ],
           "confirmed": true
@@ -2149,12 +2149,12 @@
             {
               "name": "Lucas",
               "decklink": "https://moxfield.com/decks/gamma1",
-              "deckPrice": 289.36
+              "deckPrice": 442.56
             },
             {
               "name": "André",
               "decklink": "https://moxfield.com/decks/gamma2",
-              "deckPrice": 220.09
+              "deckPrice": 548.6
             }
           ],
           "confirmed": true
@@ -2167,12 +2167,12 @@
             {
               "name": "Vinícius",
               "decklink": "https://moxfield.com/decks/delta1",
-              "deckPrice": 83.96
+              "deckPrice": 389.57
             },
             {
               "name": "Gabriel",
               "decklink": "https://moxfield.com/decks/delta2",
-              "deckPrice": 185.96
+              "deckPrice": 360.15
             }
           ],
           "confirmed": false
