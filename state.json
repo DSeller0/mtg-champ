@@ -1,6 +1,1927 @@
 {
   "meta": {
-    "exportedAt": ""
+    "exportedAt": "2026-06-07T15:47:01.099630Z"
   },
-  "tournaments": []
+  "tournaments": [
+    {
+      "id": "tournament_1700000000",
+      "name": "Grand Prix Outono",
+      "date": "2025-01-12",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 412.5
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 93.01
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 223.02
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 196.07
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 462.97
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 431.88
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 543.93
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 125.21
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 100,
+          "wins": 3
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 70,
+          "wins": 2
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 55,
+          "wins": 1
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 45,
+          "wins": 1
+        }
+      ]
+    },
+    {
+      "id": "tournament_1701000000",
+      "name": "Copa Relâmpago",
+      "date": "2025-02-09",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 224.49
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 191.96
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 477.02
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 133.15
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 277.56
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 266.67
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 258.86
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 217.55
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 0,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 1,
+              "winsB": 0,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 80,
+          "wins": 3
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 80,
+          "wins": 2
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 65,
+          "wins": 1
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 5,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1702000000",
+      "name": "Torneio dos Campeões",
+      "date": "2025-03-09",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 524.77
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 530.57
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 277.67
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 315.77
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 513.74
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 164.58
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 264.74
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 428.49
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_gamma",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 105,
+          "wins": 3
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 70,
+          "wins": 2
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 45,
+          "wins": 1
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 40,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1703000000",
+      "name": "Liga Cone #1",
+      "date": "2025-04-13",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 498.62
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 288.61
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 114.42
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 554.83
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 374.93
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 453.32
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 190.57
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 339.6
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 105,
+          "wins": 3
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 70,
+          "wins": 1
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 70,
+          "wins": 1
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 35,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1704000000",
+      "name": "Liga Cone #2",
+      "date": "2025-05-11",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 473.01
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 527.77
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 159.48
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 163.19
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 433.85
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 390.13
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 280.08
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 389.86
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_delta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_alpha",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 90,
+          "wins": 3
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 60,
+          "wins": 1
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 45,
+          "wins": 1
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 45,
+          "wins": 1
+        }
+      ]
+    },
+    {
+      "id": "tournament_1705000000",
+      "name": "Duelo de Titãs",
+      "date": "2025-06-08",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 585.38
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 476.22
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 343.99
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 135.33
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 405.16
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 517.67
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 343.98
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 183.43
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 0,
+              "winsB": 1,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 95,
+          "wins": 3
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 70,
+          "wins": 2
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 55,
+          "wins": 1
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 30,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1706000000",
+      "name": "Copa Invernal",
+      "date": "2025-07-13",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 124.54
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 332.72
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 115.99
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 475.51
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 478.23
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 146.76
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 327.15
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 365.9
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 90,
+          "wins": 3
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 70,
+          "wins": 1
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 65,
+          "wins": 1
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 55,
+          "wins": 1
+        }
+      ]
+    },
+    {
+      "id": "tournament_1707000000",
+      "name": "Grand Prix Primavera",
+      "date": "2025-08-10",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 90.94
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 368.04
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 385.99
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 83.74
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 448.08
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 110.61
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 115.05
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 96.33
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_gamma",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_alpha",
+              "winsA": 0,
+              "winsB": 2,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 90,
+          "wins": 3
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 85,
+          "wins": 2
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 65,
+          "wins": 1
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 40,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1708000000",
+      "name": "Liga Cone #3",
+      "date": "2025-09-14",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 300.26
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 322.85
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 459.12
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 430.15
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 591.77
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 131.18
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 289.36
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 256.44
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 0,
+              "winsB": 0,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_gamma",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 2,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 120,
+          "wins": 4
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 60,
+          "wins": 1
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 55,
+          "wins": 1
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 25,
+          "wins": 0
+        }
+      ]
+    },
+    {
+      "id": "tournament_1709000000",
+      "name": "Grande Final Cone",
+      "date": "2025-10-12",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "finished",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 166.48
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 332.53
+            }
+          ]
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 191.15
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 288.54
+            }
+          ]
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 110.49
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 277.07
+            }
+          ]
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "confirmed": true,
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 592.36
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 217.91
+            }
+          ]
+        }
+      ],
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_alpha",
+              "duplaB": "d_beta",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 2,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_gamma",
+              "winsA": 1,
+              "winsB": 2,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 1,
+              "winsB": 0,
+              "timeout": true
+            }
+          ]
+        },
+        {
+          "roundNumber": 3,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_alpha",
+              "winsA": 2,
+              "winsB": 0,
+              "timeout": false
+            },
+            {
+              "duplaA": "d_beta",
+              "duplaB": "d_delta",
+              "winsA": 1,
+              "winsB": 1,
+              "timeout": false
+            }
+          ]
+        },
+        {
+          "roundNumber": 4,
+          "status": "finished",
+          "matches": [
+            {
+              "duplaA": "d_gamma",
+              "duplaB": "d_beta",
+              "winsA": 0,
+              "winsB": 1,
+              "timeout": true
+            },
+            {
+              "duplaA": "d_delta",
+              "duplaB": "d_alpha",
+              "winsA": 0,
+              "winsB": 0,
+              "timeout": true
+            }
+          ]
+        }
+      ],
+      "standings": [
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "pts": 75,
+          "wins": 2
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "pts": 75,
+          "wins": 2
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "pts": 55,
+          "wins": 1
+        },
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "pts": 15,
+          "wins": 0
+        }
+      ]
+    }
+  ]
 }
