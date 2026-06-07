@@ -1,12 +1,29 @@
 {
-  "gymName": "Cone",
+  "gymName": "Cone — Torneios",
   "themeAccent": "#c9a84c",
-  "themeAccentText": "#000000",
+  "themeAccentText": "#0d0b08",
   "organizer": "",
   "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap",
   "fontFamily": "'Cinzel', serif",
   "scheduleTitle": "Cone — Agenda",
   "leaderboardTitle": "Cone — Leaderboard",
   "appTitle": "Cone — Torneios",
-  "logo": ""
+  "logo": "",
+  "_palette": {
+    "bg":         "#0d0b08",
+    "bg2":        "#13110d",
+    "bg3":        "#1a1612",
+    "border":     "#2e2820",
+    "border2":    "#3d3428",
+    "accent":     "#c9a84c",
+    "accentDim":  "#7a6230",
+    "gold":       "#c9a84c",
+    "gold2":      "#e8c96a",
+    "text":       "#e8dfc8",
+    "textDim":    "#8a7f68",
+    "textMuted":  "#5a5244",
+    "green":      "#4cad6e",
+    "red":        "#c94c4c",
+    "teal":       "#4ac8c0"
+  }
 }

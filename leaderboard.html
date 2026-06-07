@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
+<link rel="manifest" href="./manifest.json"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>MTG — Leaderboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -155,6 +156,66 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);fo
 </div>
 
 <script>
+
+// ══════════════════════════════════════════════════════
+//  THEME — applies all CSS vars from config._palette
+// ══════════════════════════════════════════════════════
+function applyTheme(cfg){
+  const p = cfg._palette || {};
+  const D = {  // defaults (original dark-gold theme)
+    bg:          '#0d0b08',
+    bg2:         '#13110d',
+    bg3:         '#1a1612',
+    border:      '#2e2820',
+    border2:     '#3d3428',
+    accent:      cfg.themeAccent || '#c9a84c',
+    accentDim:   '#7a6230',
+    gold:        cfg.themeAccent || '#c9a84c',
+    gold2:       '#e8c96a',
+    text:        '#e8dfc8',
+    textDim:     '#8a7f68',
+    textMuted:   '#5a5244',
+    green:       '#4cad6e',
+    red:         '#c94c4c',
+    teal:        '#4ac8c0',
+  };
+  const R = document.documentElement;
+  const v = (key, cssVar) => R.style.setProperty(cssVar, p[key] || D[key]);
+
+  v('bg',         '--bg');
+  v('bg2',        '--bg2');
+  v('bg3',        '--bg3');
+  v('border',     '--border');
+  v('border2',    '--border2');
+  v('accent',     '--accent');
+  v('accentDim',  '--gold-dim');
+  v('gold',       '--gold');
+  v('gold2',      '--gold2');
+  v('text',       '--text');
+  v('textDim',    '--text-dim');
+  v('textMuted',  '--text-muted');
+  v('green',      '--green');
+  v('red',        '--red');
+  v('teal',       '--teal');
+
+  // Accent text color
+  const accentText = cfg.themeAccentText || p.accentText || '#0d0b08';
+  R.style.setProperty('--accent-text', accentText);
+
+  // Fonts
+  if(cfg.fontFamily){
+    R.style.setProperty('--font-display', cfg.fontFamily);
+    R.style.setProperty('--font-body', cfg.fontFamily);
+  }
+  if(cfg.googleFontsUrl){
+    const lk = document.getElementById('gfonts') || document.getElementById('gfonts-lb');
+    if(lk) lk.href = cfg.googleFontsUrl;
+  }
+
+  // Page background (body itself, not just vars)
+  document.body.style.background = p.bg || D.bg;
+}
+
 // ══════════════════════════════════════════════════════
 //  HELPERS
 // ══════════════════════════════════════════════════════
@@ -565,14 +626,8 @@ function switchView(name){
 //  MAIN RENDER
 // ══════════════════════════════════════════════════════
 function render(cfg, stateData){
+  applyTheme(cfg);
   const gymName=cfg.gymName||'MTG Torneios';
-  const accent=cfg.themeAccent||'#c9a84c';
-  const fontFamily=cfg.fontFamily||"'Cinzel',serif";
-  const googleFonts=cfg.googleFontsUrl||null;
-
-  document.documentElement.style.setProperty('--gold',accent);
-  if(fontFamily) document.body.style.fontFamily=fontFamily;
-  if(googleFonts){const lk=document.getElementById('gfonts');if(lk)lk.href=googleFonts;}
   document.title=cfg.leaderboardTitle||cfg.appTitle||gymName+' — Leaderboard';
 
   _tournaments=stateData.tournaments||[];
