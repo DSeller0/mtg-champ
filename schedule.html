@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MTG — Agenda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link id="gfonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0b08;--bg2:#13110d;--bg3:#1a1612;
+  --border:#2e2820;--border2:#3d3428;
+  --gold:#c9a84c;--gold2:#e8c96a;--gold-dim:#7a6230;
+  --teal:#4ac8c0;--red:#c94c4c;--green:#4cad6e;
+  --text:#e8dfc8;--text-dim:#8a7f68;--text-muted:#5a5244;
+  --accent:#c9a84c;--accent-text:#0d0b08;
+  --font-display:'Cinzel',serif;--font-body:'Crimson Text',serif;
+  --radius:6px;
+}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;min-height:100vh}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Header ── */
+.site-header{background:linear-gradient(180deg,#1c1710 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:24px 20px 16px;text-align:center;position:relative}
+.mana-row{display:flex;justify-content:center;gap:10px;margin-bottom:12px}
+.site-logo{width:48px;height:48px;object-fit:contain;margin-bottom:8px;display:none}
+.site-logo.loaded{display:block;margin:0 auto 8px}
+.site-title{font-family:var(--font-display);font-size:clamp(16px,3vw,26px);font-weight:900;color:var(--gold2);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 24px rgba(201,168,76,.28)}
+.site-sub{font-family:var(--font-display);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-top:5px}
+.site-organizer{font-family:var(--font-body);font-style:italic;font-size:13px;color:var(--text-muted);margin-top:3px}
+
+/* ── Layout ── */
+.page{max-width:780px;margin:0 auto;padding:32px 20px 60px}
+
+/* ── Section headers ── */
+.section-title{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── Status badges ── */
+.badge{font-family:var(--font-display);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.badge-next{background:rgba(74,200,192,.12);border:1px solid var(--teal);color:var(--teal)}
+.badge-live{background:rgba(201,168,76,.14);border:1px solid var(--gold);color:var(--gold2);animation:pulse 2s ease-in-out infinite}
+.badge-done{background:rgba(76,173,110,.1);border:1px solid var(--green);color:var(--green)}
+.badge-pending{background:transparent;border:1px solid var(--border2);color:var(--text-muted)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* ── Next tournament hero card ── */
+.hero-card{background:linear-gradient(135deg,#1a1612 0%,#13110d 100%);border:1px solid var(--gold-dim);border-radius:8px;padding:24px;margin-bottom:32px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-eyebrow{font-family:var(--font-display);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:10px}
+.hero-name{font-family:var(--font-display);font-size:clamp(16px,3vw,22px);font-weight:900;color:var(--gold2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.hero-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.hero-meta-item{font-size:13px;color:var(--text-dim);display:flex;align-items:center;gap:5px}
+.hero-meta-item span{color:var(--text-muted);font-size:11px}
+.dupla-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:14px}
+.dupla-card{background:var(--bg);border:1px solid var(--border2);border-radius:5px;padding:10px 12px}
+.dupla-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dupla-card-name{font-family:var(--font-display);font-size:11px;letter-spacing:.07em;color:var(--gold);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-row{display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-top:1px solid var(--border)}
+.player-name{font-size:12px;color:var(--text-dim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:1px 4px;border-radius:3px;transition:color .15s;flex-shrink:0;position:relative}
+.deck-btn:hover{color:var(--teal)}
+.no-confirmed{font-size:13px;color:var(--text-muted);font-style:italic;margin-top:10px}
+
+/* ── Deck tooltip ── */
+.deck-tooltip{position:fixed;z-index:200;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:12px 14px;min-width:200px;max-width:280px;box-shadow:0 8px 24px rgba(0,0,0,.6)}
+.deck-tooltip.hidden{display:none}
+.deck-tooltip-title{font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.deck-tooltip-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);gap:8px}
+.deck-tooltip-row:last-child{border-bottom:none}
+.deck-tooltip-player{font-size:12px;color:var(--text);flex:1}
+.deck-tooltip-link{font-family:var(--font-display);font-size:9px;letter-spacing:.08em;color:var(--teal);text-decoration:none;border:1px solid var(--teal);border-radius:3px;padding:2px 7px;white-space:nowrap;transition:background .12s}
+.deck-tooltip-link:hover{background:rgba(74,200,192,.1)}
+.deck-tooltip-nolink{font-size:11px;color:var(--text-muted);font-style:italic}
+
+/* ── Tournament list ── */
+.tournament-list{display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.t-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .15s}
+.t-card:hover{border-color:var(--border2)}
+.t-card.clickable{cursor:pointer}
+.t-card.clickable:hover{border-color:var(--gold-dim)}
+.t-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.t-card-date{font-family:var(--font-display);font-size:11px;color:var(--text-muted);letter-spacing:.08em;min-width:80px;flex-shrink:0}
+.t-card-name{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--text);letter-spacing:.05em;flex:1}
+.t-card-organizer{font-size:12px;color:var(--text-muted);font-style:italic}
+.t-card-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.t-card-rounds{font-family:var(--font-display);font-size:9px;color:var(--text-muted);letter-spacing:.08em}
+.t-card-body{border-top:1px solid var(--border);padding:12px 16px;background:var(--bg3)}
+.t-card-dupla-row{display:flex;flex-wrap:wrap;gap:8px}
+.t-dupla-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border2);border-radius:4px;padding:4px 8px;font-size:12px;color:var(--text-dim)}
+.t-card-link-hint{font-family:var(--font-display);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);margin-top:8px;display:flex;align-items:center;gap:5px}
+
+/* ── Expanded dupla detail (for live/next in list) ── */
+.t-card-expand{border-top:1px solid var(--border);padding:12px 16px;background:var(--bg3)}
+
+/* ── General ranking ── */
+.ranking-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px}
+.ranking-header{padding:14px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ranking-title{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.ranking-link{font-family:var(--font-display);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);text-decoration:none;border:1px solid var(--teal);border-radius:3px;padding:3px 9px;transition:background .12s}
+.ranking-link:hover{background:rgba(74,200,192,.1)}
+.ranking-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.ranking-row:last-child{border-bottom:none}
+.ranking-row:hover{background:rgba(255,255,255,.015)}
+.rank-num{font-family:var(--font-display);font-size:13px;font-weight:700;width:28px;text-align:center;flex-shrink:0}
+.rank-1{color:#ffd700}.rank-2{color:#c0c0c0}.rank-3{color:#cd7f32}
+.ranking-name{flex:1;font-family:var(--font-display);font-size:12px;letter-spacing:.05em;color:var(--text)}
+.ranking-pts{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--gold);flex-shrink:0}
+.ranking-detail{font-size:11px;color:var(--text-muted);flex-shrink:0}
+.ranking-empty{padding:24px 16px;text-align:center;font-size:13px;color:var(--text-muted);font-style:italic}
+
+/* ── Loading / error ── */
+.loading{text-align:center;padding:80px 20px;color:var(--gold);font-family:var(--font-display);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.error-msg{text-align:center;padding:60px 20px;color:var(--red);font-size:13px;line-height:1.7}
+
+/* ── Mobile ── */
+@media(max-width:580px){
+  .hero-card{padding:16px}
+  .dupla-grid{grid-template-columns:1fr}
+  .t-card-header{flex-wrap:wrap;gap:8px}
+  .t-card-date{min-width:unset}
+  .page{padding:20px 14px 60px}
+}
+</style>
+</head>
+<body>
+
+<div id="root"><div class="loading">A Carregar...</div></div>
+
+<!-- Deck tooltip (singleton) -->
+<div class="deck-tooltip hidden" id="deck-tooltip">
+  <div class="deck-tooltip-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+const TODAY = new Date();
+TODAY.setHours(0,0,0,0);
+
+function parseDate(str){
+  if(!str) return null;
+  const d = new Date(str + 'T12:00:00');
+  return isNaN(d)?null:d;
+}
+
+function fmtDate(str){
+  const d = parseDate(str);
+  if(!d) return '—';
+  return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function tournamentStatus(t){
+  const d = parseDate(t.date);
+  const isToday = d && d.getTime() === TODAY.getTime();
+  const isPast  = d && d < TODAY;
+  const isFuture= d && d > TODAY;
+  const hasResults = (t.rounds||[]).some(r=>r.status==='finished'&&(r.matches||[]).some(m=>m.winsA!==null&&m.winsA!==undefined&&m.duplaB!=='BYE'));
+
+  if(t.status==='finished'){
+    return hasResults ? 'done' : 'pending';
+  }
+  // ongoing
+  if(isToday) return 'live';
+  if(isFuture) return 'upcoming';
+  // ongoing but date passed
+  return hasResults ? 'done' : 'pending';
+}
+
+function statusBadge(status){
+  const map={
+    upcoming: ['Próximo','badge-next'],
+    live:     ['Em Andamento','badge-live'],
+    done:     ['Encerrado','badge-done'],
+    pending:  ['Encerrado — Aguardando Resultados','badge-pending'],
+  };
+  const [label,cls] = map[status]||['—','badge-pending'];
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+
+// ── Points (mirrors tournament.html) ──
+function calcPoints(winsA,winsB,timeout){
+  if(!timeout){
+    if(winsA>winsB) return{ptsA:30,ptsB:winsB>0?10:0};
+    if(winsB>winsA) return{ptsA:winsA>0?10:0,ptsB:30};
+    return{ptsA:15,ptsB:15};
+  }
+  if(winsA===2&&winsB===1) return{ptsA:30,ptsB:10};
+  if(winsB===2&&winsA===1) return{ptsA:10,ptsB:30};
+  if(winsA===2&&winsB===0) return{ptsA:30,ptsB:0};
+  if(winsB===2&&winsA===0) return{ptsA:0,ptsB:30};
+  if(winsA===1&&winsB===0) return{ptsA:20,ptsB:0};
+  if(winsB===1&&winsA===0) return{ptsA:0,ptsB:20};
+  if(winsA===1&&winsB===1) return{ptsA:15,ptsB:15};
+  return{ptsA:5,ptsB:5};
+}
+
+function getTournamentStandings(t){
+  const map={};
+  (t.duplas||[]).forEach(d=>{ map[d.id]={id:d.id,name:d.name,pts:0,wins:0}; });
+  (t.rounds||[]).filter(r=>r.status==='finished').forEach(r=>{
+    (r.matches||[]).forEach(m=>{
+      if(m.duplaB==='BYE'||m.winsA===null||m.winsA===undefined) return;
+      const{ptsA,ptsB}=calcPoints(m.winsA,m.winsB,m.timeout);
+      if(map[m.duplaA]){map[m.duplaA].pts+=ptsA;if(m.winsA>m.winsB)map[m.duplaA].wins++;}
+      if(map[m.duplaB]){map[m.duplaB].pts+=ptsB;if(m.winsB>m.winsA)map[m.duplaB].wins++;}
+    });
+  });
+  return Object.values(map).sort((a,b)=>b.pts-a.pts||b.wins-a.wins);
+}
+
+// ── General ranking across tournaments ──
+// Matches duplas by exact name (case-sensitive)
+// Tiebreaker: total pts → most 1st place finishes → most 2nd → alphabetical
+function buildGeneralRanking(tournaments){
+  const finished = tournaments.filter(t=>tournamentStatus(t)==='done');
+  if(!finished.length) return[];
+
+  const byName={};
+  finished.forEach(t=>{
+    const standings=getTournamentStandings(t);
+    standings.forEach((row,i)=>{
+      const n=row.name;
+      if(!byName[n]) byName[n]={name:n,totalPts:0,p1:0,p2:0,p3:0,tournaments:0};
+      byName[n].totalPts+=row.pts;
+      byName[n].tournaments++;
+      if(i===0) byName[n].p1++;
+      else if(i===1) byName[n].p2++;
+      else if(i===2) byName[n].p3++;
+    });
+  });
+
+  return Object.values(byName).sort((a,b)=>{
+    if(b.totalPts!==a.totalPts) return b.totalPts-a.totalPts;
+    if(b.p1!==a.p1) return b.p1-a.p1;
+    if(b.p2!==a.p2) return b.p2-a.p2;
+    if(b.p3!==a.p3) return b.p3-a.p3;
+    return a.name.localeCompare(b.name,'pt-BR');
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  DECK TOOLTIP
+// ══════════════════════════════════════════════════════
+let tooltipOpen = false;
+
+function showDeckTooltip(btn, dupla){
+  const tt = document.getElementById('deck-tooltip');
+  document.getElementById('tt-title').textContent = dupla.name;
+  const players = dupla.players||[];
+  document.getElementById('tt-body').innerHTML = players.map(p=>`
+    <div class="deck-tooltip-row">
+      <span class="deck-tooltip-player">${p.name||'Jogador'}</span>
+      ${p.decklink
+        ? `<a class="deck-tooltip-link" href="${p.decklink}" target="_blank" rel="noopener">🔗 Deck</a>`
+        : `<span class="deck-tooltip-nolink">Sem link</span>`}
+    </div>
+  `).join('');
+
+  // Position near button
+  const rect = btn.getBoundingClientRect();
+  tt.classList.remove('hidden');
+  const ttW = tt.offsetWidth;
+  const ttH = tt.offsetHeight;
+  let left = rect.left;
+  let top  = rect.bottom + 6;
+  if(left + ttW > window.innerWidth - 8) left = window.innerWidth - ttW - 8;
+  if(top + ttH > window.innerHeight - 8) top = rect.top - ttH - 6;
+  tt.style.left = left + 'px';
+  tt.style.top  = top + 'px';
+  tooltipOpen = true;
+}
+
+function hideDeckTooltip(){
+  document.getElementById('deck-tooltip').classList.add('hidden');
+  tooltipOpen = false;
+}
+
+document.addEventListener('click', e=>{
+  if(tooltipOpen && !e.target.closest('#deck-tooltip') && !e.target.closest('.deck-btn')){
+    hideDeckTooltip();
+  }
+});
+
+// Make showDeckTooltip callable from inline onclick
+window._showTip = function(btnEl, duplaJson){
+  const dupla = JSON.parse(decodeURIComponent(duplaJson));
+  showDeckTooltip(btnEl, dupla);
+};
+
+// ══════════════════════════════════════════════════════
+//  RENDER HELPERS
+// ══════════════════════════════════════════════════════
+function renderDuplaChip(d){
+  return `<span class="t-dupla-chip">
+    <span class="dot" style="background:${d.color||'#555'}"></span>
+    ${d.name}
+  </span>`;
+}
+
+function renderDuplaCard(d){
+  const enc = encodeURIComponent(JSON.stringify({
+    name: d.name,
+    players: (d.players||[]).map(p=>({name:p.name,decklink:p.decklink}))
+  }));
+  const hasAnyLink = (d.players||[]).some(p=>p.decklink);
+  return `
+  <div class="dupla-card">
+    <div class="dupla-card-header">
+      <div class="dot" style="background:${d.color||'#555'}"></div>
+      <div class="dupla-card-name">${d.name}</div>
+      ${hasAnyLink?`<button class="deck-btn" onclick="_showTip(this,'${enc}')" title="Ver decks">🔗</button>`:''}
+    </div>
+    ${(d.players||[]).map(p=>`
+      <div class="player-row">
+        <span class="player-name">${p.name||'—'}</span>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function renderHeroCard(t){
+  const status = tournamentStatus(t);
+  const confirmed = (t.duplas||[]).filter(d=>d.confirmed);
+  return `
+  <div class="hero-card">
+    <div class="hero-eyebrow">${status==='live'?'🟡 Acontecendo agora':'Próximo Torneio'}</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+      <div class="hero-name">${t.name}</div>
+      ${statusBadge(status)}
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">📅 <span>Data:</span> ${fmtDate(t.date)}</div>
+      <div class="hero-meta-item">⚔ <span>Rodadas:</span> ${t.maxRounds}</div>
+      ${t.organizer?`<div class="hero-meta-item">👤 <span>Organizador:</span> ${t.organizer}</div>`:''}
+    </div>
+    ${confirmed.length?`
+      <div class="section-title" style="font-size:9px;margin-bottom:10px">Duplas Confirmadas</div>
+      <div class="dupla-grid">
+        ${confirmed.map(renderDuplaCard).join('')}
+      </div>
+    `:`<div class="no-confirmed">Nenhuma dupla confirmada ainda.</div>`}
+  </div>`;
+}
+
+function renderTournamentCard(t, cfg){
+  const status = tournamentStatus(t);
+  const isClickable = status === 'done';
+  const confirmed = (t.duplas||[]).filter(d=>d.confirmed);
+  const showDuplas = (status==='upcoming'||status==='live') && confirmed.length>0;
+  const lbUrl = `leaderboard.html?tournament=${t.id}`;
+
+  return `
+  <div class="t-card${isClickable?' clickable':''}"
+    ${isClickable?`onclick="window.location='${lbUrl}'"`:''}>
+    <div class="t-card-header">
+      <div class="t-card-date">${fmtDate(t.date)}</div>
+      <div>
+        <div class="t-card-name">${t.name}</div>
+        ${t.organizer?`<div class="t-card-organizer">${t.organizer}</div>`:''}
+      </div>
+      <div class="t-card-meta">
+        <span class="t-card-rounds">${t.maxRounds} rodadas</span>
+        ${statusBadge(status)}
+      </div>
+    </div>
+    ${showDuplas?`
+    <div class="t-card-body">
+      <div class="t-card-dupla-row">
+        ${confirmed.map(renderDuplaChip).join('')}
+      </div>
+    </div>`:''}
+    ${isClickable?`
+    <div class="t-card-body">
+      <div class="t-card-link-hint">Ver resultados →</div>
+    </div>`:''}
+    ${status==='pending'?`
+    <div class="t-card-body">
+      <div style="font-size:12px;color:var(--text-muted);font-style:italic">Resultados pendentes de publicação.</div>
+    </div>`:''}
+  </div>`;
+}
+
+function renderGeneralRanking(ranking){
+  const podiumColors=['#ffd700','#c0c0c0','#cd7f32'];
+  const podiumClass=['rank-1','rank-2','rank-3'];
+  if(!ranking.length){
+    return`<div class="ranking-empty">Nenhum torneio encerrado ainda.</div>`;
+  }
+  // Show top 5 only; link to full leaderboard for more
+  const top = ranking.slice(0,5);
+  return top.map((r,i)=>`
+    <div class="ranking-row">
+      <div class="rank-num ${i<3?podiumClass[i]:''}" style="${i<3?'color:'+podiumColors[i]:''}">${i+1}º</div>
+      <div class="dot" style="background:${podiumColors[Math.min(i,2)]||'var(--text-muted)'}"></div>
+      <div class="ranking-name">${r.name}</div>
+      <div class="ranking-detail">${r.tournaments} torneio${r.tournaments!==1?'s':''}</div>
+      <div class="ranking-pts">${r.totalPts} <span style="font-size:11px;color:var(--text-muted);font-weight:400">pts</span></div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  MAIN RENDER
+// ══════════════════════════════════════════════════════
+function render(cfg, stateData){
+  const accent      = cfg.themeAccent||'#c9a84c';
+  const accentText  = cfg.themeAccentText||'#000';
+  const gymName     = cfg.gymName||'MTG Torneios';
+  const fontFamily  = cfg.fontFamily||"'Cinzel',serif";
+  const googleFonts = cfg.googleFontsUrl||null;
+  const logo        = cfg.logo||null;
+
+  // Apply config theming
+  document.documentElement.style.setProperty('--accent', accent);
+  document.documentElement.style.setProperty('--gold', accent);
+  document.documentElement.style.setProperty('--accent-text', accentText);
+  if(fontFamily) document.body.style.fontFamily = fontFamily;
+  if(googleFonts){
+    const lk = document.getElementById('gfonts');
+    if(lk) lk.href = googleFonts;
+  }
+  document.title = cfg.scheduleTitle || cfg.appTitle || gymName + ' — Agenda';
+
+  const tournaments = (stateData.tournaments||[]);
+
+  // Sort: upcoming first, then by date desc for past
+  const sorted = [...tournaments].sort((a,b)=>{
+    const da=parseDate(a.date), db=parseDate(b.date);
+    if(!da&&!db) return 0;
+    if(!da) return 1;
+    if(!db) return -1;
+    return db-da;
+  });
+
+  // Find hero: next upcoming or live tournament
+  const hero = sorted.slice().sort((a,b)=>{
+    const da=parseDate(a.date),db=parseDate(b.date);
+    if(!da&&!db) return 0;if(!da)return 1;if(!db)return -1;
+    return da-db;
+  }).find(t=>{
+    const s=tournamentStatus(t);
+    return s==='upcoming'||s==='live';
+  });
+
+  // General ranking
+  const ranking = buildGeneralRanking(tournaments);
+
+  // Build page
+  const headerHTML = `
+  <div class="site-header">
+    ${logo?`<img class="site-logo" src="${logo}" alt="${gymName}" onload="this.classList.add('loaded')"/>`:''}
+    <div class="mana-row">
+      <span class="ms ms-w ms-cost ms-shadow" style="font-size:20px" title="White"></span>
+      <span class="ms ms-u ms-cost ms-shadow" style="font-size:20px" title="Blue"></span>
+      <span class="ms ms-b ms-cost ms-shadow" style="font-size:20px" title="Black"></span>
+      <span class="ms ms-r ms-cost ms-shadow" style="font-size:20px" title="Red"></span>
+      <span class="ms ms-g ms-cost ms-shadow" style="font-size:20px" title="Green"></span>
+    </div>
+    <div class="site-title">${gymName}</div>
+    <div class="site-sub">Agenda de Torneios</div>
+    ${cfg.organizer?`<div class="site-organizer">${cfg.organizer}</div>`:''}
+  </div>`;
+
+  const pageHTML = `
+  <div class="page">
+    ${hero ? renderHeroCard(hero) : ''}
+
+    <div class="section-title">Ranking Geral</div>
+    <div class="ranking-card">
+      <div class="ranking-header">
+        <div class="ranking-title">Classificação Acumulada</div>
+        <a class="ranking-link" href="leaderboard.html">Ver completo →</a>
+      </div>
+      ${renderGeneralRanking(ranking)}
+    </div>
+
+    <div class="section-title">Todos os Torneios</div>
+    <div class="tournament-list">
+      ${sorted.length
+        ? sorted.map(t=>renderTournamentCard(t,cfg)).join('')
+        : '<div style="color:var(--text-muted);font-style:italic;font-size:13px;padding:20px 0">Nenhum torneio cadastrado ainda.</div>'}
+    </div>
+  </div>`;
+
+  document.getElementById('root').innerHTML = headerHTML + pageHTML;
+}
+
+// ══════════════════════════════════════════════════════
+//  LOAD DATA
+// ══════════════════════════════════════════════════════
+Promise.all([
+  fetch('./config.json?v='+Date.now()).then(r=>r.ok?r.json():{}).catch(()=>({})),
+  fetch('./state.json?v='+Date.now()).then(r=>{
+    if(!r.ok) throw new Error('state.json não encontrado (HTTP '+r.status+')');
+    return r.json();
+  })
+]).then(([cfg, stateData])=>{
+  render(cfg, stateData);
+}).catch(err=>{
+  document.getElementById('root').innerHTML=`
+  <div class="site-header">
+    <div class="mana-row">
+      <span class="ms ms-w ms-cost ms-shadow" style="font-size:20px"></span>
+      <span class="ms ms-u ms-cost ms-shadow" style="font-size:20px"></span>
+      <span class="ms ms-b ms-cost ms-shadow" style="font-size:20px"></span>
+      <span class="ms ms-r ms-cost ms-shadow" style="font-size:20px"></span>
+      <span class="ms ms-g ms-cost ms-shadow" style="font-size:20px"></span>
+    </div>
+    <div class="site-title">MTG Torneios</div>
+    <div class="site-sub">Agenda de Torneios</div>
+  </div>
+  <div class="page">
+    <div class="error-msg">
+      Não foi possível carregar os dados.<br>
+      <small style="color:var(--text-muted)">Verifique se o arquivo <b>state.json</b> está na mesma pasta.<br>${err.message}</small>
+    </div>
+  </div>`;
+});
+</script>
+</body>
+</html>

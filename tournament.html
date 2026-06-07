@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MTG — Torneio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0b08;--bg2:#13110d;--bg3:#1a1612;
+  --border:#2e2820;--border2:#3d3428;
+  --gold:#c9a84c;--gold2:#e8c96a;--gold-dim:#7a6230;
+  --teal:#4ac8c0;--red:#c94c4c;--green:#4cad6e;
+  --text:#e8dfc8;--text-dim:#8a7f68;--text-muted:#5a5244;
+  --font-display:'Cinzel',serif;--font-body:'Crimson Text',serif;
+  --radius:6px;--header-h:120px;
+}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;height:100%;overflow:hidden}
+
+/* ── Layout: fixed top, scrollable body ── */
+#app-fixed{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bg)}
+#app-scroll{position:fixed;top:var(--header-h);left:0;right:0;bottom:60px;overflow-y:auto;scroll-padding-top:8px}
+#app-scroll::-webkit-scrollbar{width:6px}
+#app-scroll::-webkit-scrollbar-track{background:var(--bg)}
+#app-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ── Header ── */
+.app-header{text-align:center;padding:14px 20px 10px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#1a1410 0%,var(--bg) 100%);position:relative}
+.app-header .mana-dots{display:flex;justify-content:center;gap:10px;margin-bottom:8px}
+.mana-dot{width:12px;height:12px;border-radius:50%}
+.app-title{font-family:var(--font-display);font-size:clamp(14px,2.5vw,22px);font-weight:900;color:var(--gold2);letter-spacing:.1em;text-transform:uppercase;text-shadow:0 0 20px rgba(201,168,76,.25)}
+.app-by{font-family:var(--font-body);font-style:italic;font-size:12px;color:var(--text-muted);margin-top:2px}
+.hamburger{display:none;position:absolute;left:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gold);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1}
+
+/* ── Desktop tabs ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg)}
+.tab{flex:1;padding:10px 8px;font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--text-muted);border:none;background:transparent;border-bottom:2px solid transparent;transition:all .2s}
+.tab:hover{color:var(--text-dim)}
+.tab.active{color:var(--gold2);border-bottom-color:var(--gold2)}
+.tab-icon{display:block;font-size:13px;margin-bottom:3px}
+
+/* ── Mobile drawer ── */
+.drawer-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6)}
+.drawer{position:fixed;top:0;left:-220px;bottom:0;width:200px;background:var(--bg);border-right:1px solid var(--border2);z-index:201;transition:left .22s ease;padding-top:14px}
+.drawer.open{left:0}
+.drawer-label{font-family:var(--font-display);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;padding:0 16px 10px}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-left:3px solid transparent;transition:all .15s;font-family:var(--font-display);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.drawer-item:hover{color:var(--text-dim);background:rgba(255,255,255,.03)}
+.drawer-item.active{color:var(--gold2);border-left-color:var(--gold2);background:rgba(201,168,76,.06)}
+.drawer-icon{font-size:16px;width:20px;text-align:center}
+
+/* ── Tab content ── */
+.tab-content{display:none;padding:28px 20px 24px;max-width:860px;margin:0 auto}
+.tab-content.active{display:block}
+
+/* ── Cards ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.card-title{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';display:inline-block;width:3px;height:13px;background:var(--gold);border-radius:2px}
+
+/* ── Forms ── */
+.form-row{display:grid;gap:12px;margin-bottom:12px}
+.form-row.cols-2{grid-template-columns:1fr 1fr}
+.form-row.cols-3{grid-template-columns:1fr 1fr 1fr}
+label{font-family:var(--font-display);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:5px}
+input,select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-family:var(--font-body);font-size:15px;padding:8px 12px;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--gold-dim)}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.radio-group{display:flex;gap:16px;align-items:center;margin-top:4px;flex-wrap:wrap}
+.radio-group label{font-size:12px;letter-spacing:.03em;text-transform:none;display:flex;align-items:center;gap:6px;cursor:pointer;margin-bottom:0}
+.radio-group input[type=radio]{width:auto;background:none;border:none;padding:0;accent-color:var(--gold)}
+
+/* ── Buttons ── */
+.btn{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border-radius:var(--radius);border:none;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:var(--gold);color:#0d0b08}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text-dim)}.btn-outline:hover{border-color:var(--gold-dim);color:var(--gold)}
+.btn-danger{background:transparent;border:1px solid var(--red);color:var(--red)}.btn-danger:hover{background:rgba(201,76,76,.1)}
+.btn-green{background:var(--green);color:#0d0b08}.btn-green:hover{filter:brightness(1.1)}
+.btn-sm{padding:5px 11px;font-size:9px}
+.btn-full{width:100%;justify-content:center}
+
+/* ── Dupla list ── */
+.dupla-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.dupla-item{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 14px}
+.dupla-item-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dupla-num{font-family:var(--font-display);font-size:9px;color:var(--text-muted);letter-spacing:.1em}
+.dupla-name-display{font-family:var(--font-display);font-size:12px;color:var(--gold);letter-spacing:.06em;flex:1}
+.confirmed-badge{font-family:var(--font-display);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:3px;cursor:pointer}
+.confirmed-badge.on{border:1px solid var(--green);color:var(--green);background:rgba(76,173,110,.08)}
+.confirmed-badge.off{border:1px solid var(--border2);color:var(--text-muted)}
+.icon-btn{background:transparent;border:none;cursor:pointer;font-size:15px;padding:2px 5px;border-radius:3px;transition:color .15s;color:var(--text-muted)}
+.icon-btn:hover{color:var(--gold)}
+.icon-btn.del:hover{color:var(--red)}
+.dupla-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.player-block{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px}
+.player-label{font-family:var(--font-display);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px}
+.player-fields{display:flex;flex-direction:column;gap:6px}
+.add-dupla-form{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.color-picker-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.color-swatch{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .12s;flex-shrink:0}
+.color-swatch.selected{border-color:#fff}
+
+/* ── Round cards ── */
+.round-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.round-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.round-title{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.round-badge{font-family:var(--font-display);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.badge-pending{border:1px solid var(--border2);color:var(--text-muted)}
+.badge-done{border:1px solid var(--green);color:var(--green);background:rgba(76,173,110,.08)}
+.match-item{padding:12px 14px;border-bottom:1px solid var(--border)}
+.match-item:last-child{border-bottom:none}
+.match-label{font-family:var(--font-display);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match-result-badge{font-size:8px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+.match-row{display:flex;align-items:center;gap:8px}
+.team-box{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:8px 10px;text-align:center}
+.team-name{font-family:var(--font-display);font-size:11px;letter-spacing:.05em;color:var(--text)}
+.team-pts{font-size:10px;color:var(--text-muted);margin-top:2px}
+.vs{font-family:var(--font-display);font-size:10px;color:var(--text-muted);flex-shrink:0;width:22px;text-align:center}
+.score-inputs{display:flex;align-items:center;gap:6px;margin-top:8px}
+.score-input{width:46px;text-align:center;font-size:18px;font-weight:700;padding:7px 4px;background:var(--bg);border:1px solid var(--border2);border-radius:4px;color:var(--text)}
+.score-sep{font-family:var(--font-display);font-size:12px;color:var(--text-muted)}
+.timeout-check{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim);cursor:pointer;margin-top:6px}
+.timeout-check input{width:auto;padding:0;background:none;border:none;accent-color:var(--gold)}
+.match-actions{display:flex;gap:8px;margin-top:8px;justify-content:flex-end}
+.match-locked{opacity:.65;pointer-events:none}
+
+/* ── Timer ── */
+.timer-row{display:flex;align-items:center;gap:8px;margin-top:8px;padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:4px}
+.timer-display{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:.08em;min-width:52px;color:var(--text)}
+.timer-display.warning{color:#e8a030}
+.timer-display.expired{color:var(--red)}
+.timer-label{font-family:var(--font-display);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);flex:1}
+
+/* ── Standings ── */
+.standings-table{width:100%;border-collapse:collapse}
+.standings-table th{font-family:var(--font-display);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);padding:7px 8px;text-align:left;border-bottom:1px solid var(--border)}
+.standings-table td{padding:9px 8px;border-bottom:1px solid var(--border);font-size:13px}
+.standings-table tr:last-child td{border-bottom:none}
+.standings-table tr:hover td{background:rgba(255,255,255,.015)}
+.rank-num{font-family:var(--font-display);font-size:12px;font-weight:700;width:28px;text-align:center}
+.pts-val{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--gold)}
+.wld{font-size:12px;color:var(--text-dim)}
+.champion-banner{text-align:center;padding:20px;margin-bottom:14px;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(232,201,106,.03));border:1px solid var(--gold-dim);border-radius:var(--radius)}
+.champion-crown{font-size:24px;margin-bottom:6px}
+.champion-label{font-family:var(--font-display);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim)}
+.champion-name{font-family:var(--font-display);font-size:20px;font-weight:900;color:var(--gold2);margin-top:3px}
+.champion-pts{font-size:12px;color:var(--text-dim);margin-top:3px}
+
+/* ── TB table ── */
+.tb-table{width:100%;border-collapse:collapse;font-size:12px}
+.tb-table th{font-family:var(--font-display);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);padding:6px 7px;text-align:center;border-bottom:1px solid var(--border)}
+.tb-table td{padding:7px;text-align:center;border-bottom:1px solid var(--border)}
+.tb-table tr:last-child td{border-bottom:none}
+.tb-w{color:var(--green);font-weight:700;background:rgba(76,173,110,.08);border-radius:3px;padding:2px 5px}
+.tb-l{color:var(--red);background:rgba(201,76,76,.08);border-radius:3px;padding:2px 5px}
+.tb-d{color:var(--teal);background:rgba(74,200,192,.08);border-radius:3px;padding:2px 5px}
+.tb-na{color:var(--text-muted)}
+.tb-legend{font-size:11px;color:var(--text-muted);margin-top:10px;font-style:italic;line-height:1.7}
+.tb-legend b{color:var(--text-dim);font-style:normal}
+
+/* ── History ── */
+.hist-round{margin-bottom:18px}
+.hist-round-label{font-family:var(--font-display);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.hist-match{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;gap:8px;flex-wrap:wrap}
+.hist-match:last-child{border-bottom:none}
+.hist-pts{color:var(--text-dim);font-size:12px}
+.hist-badge{font-family:var(--font-display);font-size:8px;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+.hist-win{background:rgba(76,173,110,.12);border:1px solid var(--green);color:var(--green)}
+.hist-draw{background:rgba(74,200,192,.1);border:1px solid var(--teal);color:var(--teal)}
+
+/* ── Save bar ── */
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:100;flex-wrap:wrap}
+.save-status{font-size:12px;color:var(--text-muted);font-style:italic}
+.save-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:22px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto}
+.modal-title{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.modal-title::before{content:'';display:inline-block;width:3px;height:13px;background:var(--gold);border-radius:2px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* ── Misc ── */
+.empty-state{text-align:center;padding:36px 20px;color:var(--text-muted);font-style:italic;font-size:13px}
+.flex-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flex-between{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.mt-8{margin-top:8px}.mt-12{margin-top:12px}
+
+
+/* ── Tournament list panel ── */
+.t-list-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.t-list-header{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.t-list-title{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.t-list-empty{padding:20px 16px;font-size:13px;color:var(--text-muted);font-style:italic;text-align:center}
+.t-list-row{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);transition:background .12s}
+.t-list-row:last-child{border-bottom:none}
+.t-list-row:hover{background:rgba(255,255,255,.02)}
+.t-list-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.t-list-dot.ongoing{background:var(--gold)}
+.t-list-dot.finished{background:var(--green)}
+.t-list-info{flex:1;min-width:0}
+.t-list-name{font-family:var(--font-display);font-size:12px;color:var(--text);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t-list-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+.t-list-badge{font-family:var(--font-display);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.t-list-badge.ongoing{border:1px solid var(--gold);color:var(--gold)}
+.t-list-badge.finished{border:1px solid var(--green);color:var(--green)}
+.t-list-actions{display:flex;gap:5px;flex-shrink:0}
+
+/* ── Edit mode banner ── */
+.edit-banner{background:rgba(201,168,76,.08);border:1px solid var(--gold-dim);border-radius:var(--radius);padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:10px;flex-wrap:wrap}
+.edit-banner.visible{display:flex}
+.edit-banner-text{font-family:var(--font-display);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);flex:1}
+.edit-banner-sub{font-size:12px;color:var(--text-muted);font-style:italic;width:100%;margin-top:2px}
+
+/* ── Mobile ── */
+@media(max-width:640px){
+  :root{--header-h:90px}
+  .hamburger{display:block}
+  .tabs{display:none}
+  .form-row.cols-2,.form-row.cols-3{grid-template-columns:1fr}
+  .dupla-fields{grid-template-columns:1fr}
+  .match-row{flex-wrap:wrap}
+  .save-actions{gap:4px}
+  .btn-sm{padding:4px 8px;font-size:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Fixed top ── -->
+<div id="app-fixed">
+  <div class="app-header">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleDrawer()" aria-label="Menu">&#9776;</button>
+    <div class="mana-dots">
+      <span class="ms ms-w ms-cost ms-shadow" style="font-size:20px" title="White"></span>
+      <span class="ms ms-u ms-cost ms-shadow" style="font-size:20px" title="Blue"></span>
+      <span class="ms ms-b ms-cost ms-shadow" style="font-size:20px" title="Black"></span>
+      <span class="ms ms-r ms-cost ms-shadow" style="font-size:20px" title="Red"></span>
+      <span class="ms ms-g ms-cost ms-shadow" style="font-size:20px" title="Green"></span>
+    </div>
+    <div class="app-title" id="header-title">MTG — Torneio de Duplas</div>
+    <div class="app-by" id="header-by"></div>
+  </div>
+  <div class="tabs" id="desktop-tabs">
+    <button class="tab active" onclick="switchTab('config')"><span class="tab-icon">⚙</span>Configuração</button>
+    <button class="tab" onclick="switchTab('rounds')"><span class="tab-icon">⚔</span>Rodadas</button>
+    <button class="tab" onclick="switchTab('standings')"><span class="tab-icon">🏆</span>Classificação</button>
+    <button class="tab" onclick="switchTab('history')"><span class="tab-icon">📜</span>Histórico</button>
+  </div>
+</div>
+
+<!-- ── Mobile drawer ── -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-label">Menu</div>
+  <div class="drawer-item active" id="di-config" onclick="switchTab('config');closeDrawer()"><span class="drawer-icon">⚙</span>Configuração</div>
+  <div class="drawer-item" id="di-rounds" onclick="switchTab('rounds');closeDrawer()"><span class="drawer-icon">⚔</span>Rodadas</div>
+  <div class="drawer-item" id="di-standings" onclick="switchTab('standings');closeDrawer()"><span class="drawer-icon">🏆</span>Classificação</div>
+  <div class="drawer-item" id="di-history" onclick="switchTab('history');closeDrawer()"><span class="drawer-icon">📜</span>Histórico</div>
+</div>
+
+<!-- ── Scrollable content ── -->
+<div id="app-scroll">
+
+  <!-- CONFIGURAÇÃO -->
+  <div class="tab-content active" id="tab-config">
+    <div class="card">
+      <div class="card-title">Parâmetros do Torneio</div>
+      <div class="form-row cols-3">
+        <div><label>Número de Rodadas</label><input type="number" id="cfg-rounds" min="1" max="20" value="4"/></div>
+        <div><label>Nome do Torneio</label><input type="text" id="cfg-name" placeholder="Ex: Grand Prix Duplas"/></div>
+        <div><label>Data</label><input type="date" id="cfg-date"/></div>
+      </div>
+      <div class="form-row cols-2">
+        <div><label>Organizador / Grupo</label><input type="text" id="cfg-organizer" placeholder="Ex: THG — By Viannex"/></div>
+        <div>
+          <label>Tempo por Rodada (min)</label>
+          <input type="number" id="cfg-timer" min="1" max="999" value="70"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Modo de Pareamento</label>
+          <div class="radio-group">
+            <label><input type="radio" name="pairing" value="auto" checked/> Automático — Swiss, sem rematches</label>
+            <label><input type="radio" name="pairing" value="manual"/> Manual</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Duplas Participantes</div>
+      <div class="dupla-list" id="dupla-list"></div>
+      <div class="add-dupla-form">
+        <div class="form-row cols-2">
+          <div><label>Nome da Dupla</label><input type="text" id="new-dupla-name" placeholder="Ex: Dragões de Ferro"/></div>
+          <div><label>Cor da Dupla</label><div class="color-picker-row" id="color-picker"></div></div>
+        </div>
+        <div class="dupla-fields">
+          <div class="player-block">
+            <div class="player-label">Jogador 1</div>
+            <div class="player-fields">
+              <div><label>Nome</label><input type="text" id="p1-name" placeholder="Nome do jogador"/></div>
+              <div><label>Link do Deck</label><input type="url" id="p1-link" placeholder="https://moxfield.com/..."/></div>
+              <div><label>Custo do Deck (R$)</label><input type="number" id="p1-price" placeholder="0,00" step="0.01" min="0"/></div>
+            </div>
+          </div>
+          <div class="player-block">
+            <div class="player-label">Jogador 2</div>
+            <div class="player-fields">
+              <div><label>Nome</label><input type="text" id="p2-name" placeholder="Nome do jogador"/></div>
+              <div><label>Link do Deck</label><input type="url" id="p2-link" placeholder="https://moxfield.com/..."/></div>
+              <div><label>Custo do Deck (R$)</label><input type="number" id="p2-price" placeholder="0,00" step="0.01" min="0"/></div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-row mt-12">
+          <button class="btn btn-gold" onclick="addDupla()">+ Adicionar Dupla</button>
+          <button class="btn btn-outline" onclick="clearAddForm()">Limpar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-list-panel" id="t-list-panel">
+      <div class="t-list-header">
+        <div class="t-list-title">Torneios</div>
+      </div>
+      <div id="t-list-body"></div>
+    </div>
+
+    <div class="edit-banner" id="edit-banner">
+      <div style="flex:1">
+        <div class="edit-banner-text">✎ Editando: <span id="edit-banner-name"></span></div>
+        <div class="edit-banner-sub">Nomes e decklists podem ser alterados. Resultados são bloqueados.</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="cancelEditTournament()">Cancelar</button>
+      <button class="btn btn-gold btn-sm" onclick="saveEditTournament()">Salvar Edições</button>
+    </div>
+
+    <div style="text-align:center;padding-bottom:20px" id="iniciar-btn-wrap">
+      <button class="btn btn-gold" style="padding:13px 36px;font-size:12px" onclick="startTournament()">⚔ Iniciar Campeonato</button>
+    </div>
+  </div>
+
+  <!-- RODADAS -->
+  <div class="tab-content" id="tab-rounds">
+    <div id="rounds-container"></div>
+  </div>
+
+  <!-- CLASSIFICAÇÃO -->
+  <div class="tab-content" id="tab-standings">
+    <div id="standings-container"></div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="tab-content" id="tab-history">
+    <div id="history-container"></div>
+  </div>
+
+</div><!-- end app-scroll -->
+
+<!-- ── Save bar ── -->
+<div class="save-bar">
+  <div class="save-status" id="save-status">Nenhuma alteração</div>
+  <div class="save-actions">
+    <button class="btn btn-outline btn-sm" onclick="saveLocal()">💾 Salvar</button>
+    <button class="btn btn-gold btn-sm" onclick="exportState()">⬇ Exportar</button>
+    <button class="btn btn-outline btn-sm" onclick="importState()">⬆ Importar</button>
+    <button class="btn btn-danger btn-sm" onclick="resetAll()">↺ Resetar</button>
+  </div>
+</div>
+<input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)"/>
+
+<!-- ── Edit modal ── -->
+<div class="modal-overlay hidden" id="edit-modal">
+  <div class="modal">
+    <div class="modal-title">Editar Dupla</div>
+    <div class="form-row cols-2">
+      <div><label>Nome da Dupla</label><input type="text" id="edit-dupla-name"/></div>
+      <div><label>Cor</label><div class="color-picker-row" id="edit-color-picker"></div></div>
+    </div>
+    <div class="dupla-fields" style="margin-top:12px">
+      <div class="player-block">
+        <div class="player-label">Jogador 1</div>
+        <div class="player-fields">
+          <div><label>Nome</label><input type="text" id="edit-p1-name"/></div>
+          <div><label>Link do Deck</label><input type="url" id="edit-p1-link"/></div>
+          <div><label>Custo (R$)</label><input type="number" id="edit-p1-price" step="0.01" min="0"/></div>
+        </div>
+      </div>
+      <div class="player-block">
+        <div class="player-label">Jogador 2</div>
+        <div class="player-fields">
+          <div><label>Nome</label><input type="text" id="edit-p2-name"/></div>
+          <div><label>Link do Deck</label><input type="url" id="edit-p2-link"/></div>
+          <div><label>Custo (R$)</label><input type="number" id="edit-p2-price" step="0.01" min="0"/></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeEditModal()">Cancelar</button>
+      <button class="btn btn-gold" onclick="saveEditModal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CONSTANTS
+// ══════════════════════════════════════════════════════
+const COLORS=['#c94c4c','#4c7ec9','#4cad6e','#c9a84c','#9b4cc9','#4ac8c0','#c97a4c','#a9d8f7','#e8c96a','#f08080'];
+const STORAGE_KEY='mtg_t_v3';
+
+// ── State ──
+let state={tournaments:[],pendingDuplas:[],pendingConfig:{}};
+let activeTournamentId=null;
+let selectedColor=COLORS[0];
+let editingIndex=null;
+let editColor=COLORS[0];
+let dirty=false;
+
+// Timer state: { 'ri-mi': { remaining, running, intervalId } }
+const timers={};
+
+// ── Getters ──
+function getActiveTournament(){
+  if(!activeTournamentId) return null;
+  return state.tournaments.find(t=>t.id===activeTournamentId)||null;
+}
+function getDuplaList(){
+  const t=getActiveTournament();
+  return (t&&t.status==='ongoing')?t.duplas:state.pendingDuplas;
+}
+function getDuplaById(t,id){return(t.duplas||[]).find(d=>d.id===id);}
+function fmt(n){return Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}
+function getTimerMinutes(){return parseInt(document.getElementById('cfg-timer')?.value)||70;}
+
+// ══════════════════════════════════════════════════════
+//  POINTS
+// ══════════════════════════════════════════════════════
+function calcPoints(winsA,winsB,timeout){
+  if(!timeout){
+    if(winsA>winsB) return{ptsA:30,ptsB:winsB>0?10:0};
+    if(winsB>winsA) return{ptsA:winsA>0?10:0,ptsB:30};
+    return{ptsA:15,ptsB:15};
+  }
+  if(winsA===2&&winsB===1) return{ptsA:30,ptsB:10};
+  if(winsB===2&&winsA===1) return{ptsA:10,ptsB:30};
+  if(winsA===2&&winsB===0) return{ptsA:30,ptsB:0};
+  if(winsB===2&&winsA===0) return{ptsA:0,ptsB:30};
+  if(winsA===1&&winsB===0) return{ptsA:20,ptsB:0};
+  if(winsB===1&&winsA===0) return{ptsA:0,ptsB:20};
+  if(winsA===1&&winsB===1) return{ptsA:15,ptsB:15};
+  return{ptsA:5,ptsB:5};
+}
+
+// ══════════════════════════════════════════════════════
+//  STANDINGS & TIEBREAKERS
+// ══════════════════════════════════════════════════════
+function buildH2H(t){
+  const h2h={};
+  (t.rounds||[]).filter(r=>r.status==='finished').forEach(r=>{
+    (r.matches||[]).forEach(m=>{
+      if(m.duplaB==='BYE'||m.winsA===null||m.winsA===undefined) return;
+      const key=m.duplaA+'__'+m.duplaB;
+      if(!h2h[key]) h2h[key]={a:0,b:0};
+      if(m.winsA>m.winsB) h2h[key].a++;
+      else if(m.winsB>m.winsA) h2h[key].b++;
+    });
+  });
+  return h2h;
+}
+
+function getTournamentStandings(t){
+  const map={};
+  (t.duplas||[]).forEach(d=>{
+    const deckCost=(d.players||[]).reduce((s,p)=>s+(p.deckPrice||0),0);
+    map[d.id]={id:d.id,name:d.name,color:d.color,pts:0,wins:0,losses:0,draws:0,gameWins:0,gameLosses:0,deckCost};
+  });
+  (t.rounds||[]).filter(r=>r.status==='finished').forEach(r=>{
+    (r.matches||[]).forEach(m=>{
+      if(m.duplaB==='BYE'||m.winsA===null||m.winsA===undefined) return;
+      const{ptsA,ptsB}=calcPoints(m.winsA,m.winsB,m.timeout);
+      if(map[m.duplaA]){
+        map[m.duplaA].pts+=ptsA;
+        map[m.duplaA].gameWins+=m.winsA;
+        map[m.duplaA].gameLosses+=m.winsB;
+        if(m.winsA>m.winsB) map[m.duplaA].wins++;
+        else if(m.winsA<m.winsB) map[m.duplaA].losses++;
+        else map[m.duplaA].draws++;
+      }
+      if(map[m.duplaB]){
+        map[m.duplaB].pts+=ptsB;
+        map[m.duplaB].gameWins+=m.winsB;
+        map[m.duplaB].gameLosses+=m.winsA;
+        if(m.winsB>m.winsA) map[m.duplaB].wins++;
+        else if(m.winsB<m.winsA) map[m.duplaB].losses++;
+        else map[m.duplaB].draws++;
+      }
+    });
+  });
+
+  const rows=Object.values(map);
+
+  // TB1: Pontos Brutos = pts - (gameLosses * 10)
+  rows.forEach(r=>{ r.tb1=r.pts-(r.gameLosses*10); });
+
+  // TB2: Força dos adversários = sum of opponent pts in matches played
+  rows.forEach(r=>{
+    let oppPts=0,count=0;
+    (t.rounds||[]).filter(rr=>rr.status==='finished').forEach(rr=>{
+      (rr.matches||[]).forEach(m=>{
+        if(m.duplaB==='BYE'||m.winsA===null) return;
+        if(m.duplaA===r.id&&map[m.duplaB]){oppPts+=map[m.duplaB].pts;count++;}
+        else if(m.duplaB===r.id&&map[m.duplaA]){oppPts+=map[m.duplaA].pts;count++;}
+      });
+    });
+    r.tb2=count?oppPts:0;
+  });
+
+  // TB3: Derrotas dos adversários = sum of opponent losses (lower = better opponents)
+  rows.forEach(r=>{
+    let oppLosses=0;
+    (t.rounds||[]).filter(rr=>rr.status==='finished').forEach(rr=>{
+      (rr.matches||[]).forEach(m=>{
+        if(m.duplaB==='BYE'||m.winsA===null) return;
+        if(m.duplaA===r.id&&map[m.duplaB]) oppLosses+=map[m.duplaB].losses;
+        else if(m.duplaB===r.id&&map[m.duplaA]) oppLosses+=map[m.duplaA].losses;
+      });
+    });
+    r.tb3=oppLosses;
+  });
+
+  // TB5: deck cost (lower = cheaper = better tiebreaker)
+  // (TB4 = direct confrontation, handled in sort)
+
+  const h2h=buildH2H(t);
+
+  rows.sort((a,b)=>{
+    if(b.pts!==a.pts) return b.pts-a.pts;
+    // TB1: Pontos Brutos
+    if(b.tb1!==a.tb1) return b.tb1-a.tb1;
+    // TB2: Força dos adversários (higher = better)
+    if(b.tb2!==a.tb2) return b.tb2-a.tb2;
+    // TB3: Derrotas dos adversários (lower = better)
+    if(a.tb3!==b.tb3) return a.tb3-b.tb3;
+    // TB4: Confronto direto
+    const k1=a.id+'__'+b.id,k2=b.id+'__'+a.id;
+    const h=h2h[k1]||h2h[k2];
+    if(h){
+      const aWon=h2h[k1]?h.a>h.b:h.b>h.a;
+      const bWon=h2h[k1]?h.b>h.a:h.a>h.b;
+      if(aWon&&!bWon) return -1;
+      if(bWon&&!aWon) return 1;
+    }
+    // TB5: deck mais barato
+    return a.deckCost-b.deckCost;
+  });
+  return rows;
+}
+
+// ══════════════════════════════════════════════════════
+//  SWISS PAIRING
+// ══════════════════════════════════════════════════════
+function generateSwissPairings(t,roundIndex){
+  const order=roundIndex===0
+    ?t.duplas.map(d=>d.id)
+    :getTournamentStandings(t).map(s=>s.id);
+
+  const prev=new Set();
+  (t.rounds||[]).slice(0,roundIndex).forEach(r=>{
+    (r.matches||[]).forEach(m=>{
+      prev.add(m.duplaA+'_'+m.duplaB);
+      prev.add(m.duplaB+'_'+m.duplaA);
+    });
+  });
+
+  function tryPair(list){
+    if(list.length===0) return[];
+    if(list.length===1) return[{duplaA:list[0],duplaB:'BYE',winsA:null,winsB:null,timeout:false}];
+    const a=list[0];
+    for(let i=1;i<list.length;i++){
+      const b=list[i];
+      if(!prev.has(a+'_'+b)&&!prev.has(b+'_'+a)){
+        const rest=tryPair(list.filter((_,idx)=>idx!==0&&idx!==i));
+        if(rest!==null) return[{duplaA:a,duplaB:b,winsA:null,winsB:null,timeout:false},...rest];
+      }
+    }
+    return[{duplaA:a,duplaB:list[1],winsA:null,winsB:null,timeout:false},...tryPair(list.slice(2))];
+  }
+  return tryPair(order);
+}
+
+// ══════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════
+let currentTab='config';
+
+function switchTab(name){
+  currentTab=name;
+  const names=['config','rounds','standings','history'];
+  // Desktop tabs
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
+  // Drawer items
+  names.forEach(n=>{
+    const el=document.getElementById('di-'+n);
+    if(el) el.classList.toggle('active',n===name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='rounds') renderRounds();
+  if(name==='standings') renderStandings();
+  if(name==='history') renderHistory();
+}
+
+function toggleDrawer(){
+  document.getElementById('drawer').classList.toggle('open');
+  document.getElementById('drawer-overlay').style.display=
+    document.getElementById('drawer').classList.contains('open')?'block':'none';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').style.display='none';
+}
+
+function markDirty(){dirty=true;setStatus('Alterações não salvas','var(--gold)');}
+function setStatus(msg,color){
+  const el=document.getElementById('save-status');
+  el.textContent=msg;el.style.color=color||'var(--text-muted)';
+}
+function updateHeaderTitle(t){
+  document.getElementById('header-title').textContent=(t&&t.name)?t.name:'MTG — Torneio de Duplas';
+  document.getElementById('header-by').textContent=(t&&t.organizer)?t.organizer:'';
+}
+
+// ══════════════════════════════════════════════════════
+//  COLOR PICKERS
+// ══════════════════════════════════════════════════════
+function renderColorPicker(){
+  document.getElementById('color-picker').innerHTML=COLORS.map(c=>
+    `<div class="color-swatch${c===selectedColor?' selected':''}" style="background:${c}" onclick="selectColor('${c}')"></div>`
+  ).join('');
+}
+function selectColor(c){selectedColor=c;renderColorPicker();}
+function renderEditColorPicker(){
+  document.getElementById('edit-color-picker').innerHTML=COLORS.map(c=>
+    `<div class="color-swatch${c===editColor?' selected':''}" style="background:${c}" onclick="selectEditColor('${c}')"></div>`
+  ).join('');
+}
+function selectEditColor(c){editColor=c;renderEditColorPicker();}
+
+// ══════════════════════════════════════════════════════
+//  DUPLA LIST
+// ══════════════════════════════════════════════════════
+function renderDuplaList(){
+  const duplas=getDuplaList();
+  const el=document.getElementById('dupla-list');
+  if(!duplas||duplas.length===0){
+    el.innerHTML='<div class="empty-state">Nenhuma dupla cadastrada ainda.</div>';return;
+  }
+  el.innerHTML=duplas.map((d,i)=>`
+    <div class="dupla-item">
+      <div class="dupla-item-header">
+        <div class="dot" style="background:${d.color}"></div>
+        <div class="dupla-num">#${i+1}</div>
+        <div class="dupla-name-display">${d.name}</div>
+        <span class="confirmed-badge ${d.confirmed?'on':'off'}" onclick="toggleConfirmed(${i})">${d.confirmed?'✓ Confirmada':'Confirmar'}</span>
+        <button class="icon-btn" onclick="openEditModal(${i})" title="Editar">✎</button>
+        <button class="icon-btn del" onclick="deleteDupla(${i})" title="Remover">✕</button>
+      </div>
+      <div class="dupla-fields">
+        <div class="player-block">
+          <div class="player-label">Jogador 1</div>
+          <div style="font-size:13px;color:var(--text)">${d.players[0].name||'—'}</div>
+          ${d.players[0].deckPrice?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">${fmt(d.players[0].deckPrice)}</div>`:''}
+          ${d.players[0].decklink?`<a href="${d.players[0].decklink}" target="_blank" style="font-size:11px;color:var(--teal);text-decoration:none;display:block;margin-top:3px">🔗 Deck</a>`:''}
+        </div>
+        <div class="player-block">
+          <div class="player-label">Jogador 2</div>
+          <div style="font-size:13px;color:var(--text)">${d.players[1].name||'—'}</div>
+          ${d.players[1].deckPrice?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">${fmt(d.players[1].deckPrice)}</div>`:''}
+          ${d.players[1].decklink?`<a href="${d.players[1].decklink}" target="_blank" style="font-size:11px;color:var(--teal);text-decoration:none;display:block;margin-top:3px">🔗 Deck</a>`:''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleConfirmed(i){getDuplaList()[i].confirmed=!getDuplaList()[i].confirmed;markDirty();renderDuplaList();}
+function deleteDupla(i){if(!confirm('Remover esta dupla?'))return;getDuplaList().splice(i,1);markDirty();renderDuplaList();}
+
+function addDupla(){
+  const name=document.getElementById('new-dupla-name').value.trim();
+  if(!name){alert('Digite o nome da dupla.');return;}
+  const dupla={
+    id:'d_'+Date.now()+'_'+Math.random().toString(36).slice(2),
+    name,color:selectedColor,confirmed:false,
+    players:[
+      {name:document.getElementById('p1-name').value.trim(),decklink:document.getElementById('p1-link').value.trim(),deckPrice:parseFloat(document.getElementById('p1-price').value)||0},
+      {name:document.getElementById('p2-name').value.trim(),decklink:document.getElementById('p2-link').value.trim(),deckPrice:parseFloat(document.getElementById('p2-price').value)||0}
+    ]
+  };
+  getDuplaList().push(dupla);
+  const idx=COLORS.indexOf(selectedColor);
+  selectedColor=COLORS[(idx+1)%COLORS.length];
+  renderColorPicker();clearAddForm();markDirty();renderDuplaList();
+}
+
+function clearAddForm(){
+  ['new-dupla-name','p1-name','p1-link','p1-price','p2-name','p2-link','p2-price'].forEach(id=>document.getElementById(id).value='');
+}
+
+// ══════════════════════════════════════════════════════
+//  EDIT MODAL
+// ══════════════════════════════════════════════════════
+function openEditModal(i){
+  const d=getDuplaList()[i];if(!d)return;
+  editingIndex=i;editColor=d.color||COLORS[0];
+  document.getElementById('edit-dupla-name').value=d.name||'';
+  document.getElementById('edit-p1-name').value=d.players[0]?.name||'';
+  document.getElementById('edit-p1-link').value=d.players[0]?.decklink||'';
+  document.getElementById('edit-p1-price').value=d.players[0]?.deckPrice||'';
+  document.getElementById('edit-p2-name').value=d.players[1]?.name||'';
+  document.getElementById('edit-p2-link').value=d.players[1]?.decklink||'';
+  document.getElementById('edit-p2-price').value=d.players[1]?.deckPrice||'';
+  renderEditColorPicker();
+  document.getElementById('edit-modal').classList.remove('hidden');
+}
+function closeEditModal(){editingIndex=null;document.getElementById('edit-modal').classList.add('hidden');}
+function saveEditModal(){
+  if(editingIndex===null)return;
+  const d=getDuplaList()[editingIndex];if(!d)return;
+  const name=document.getElementById('edit-dupla-name').value.trim();
+  if(!name){alert('O nome não pode estar vazio.');return;}
+  d.name=name;d.color=editColor;
+  d.players[0].name=document.getElementById('edit-p1-name').value.trim();
+  d.players[0].decklink=document.getElementById('edit-p1-link').value.trim();
+  d.players[0].deckPrice=parseFloat(document.getElementById('edit-p1-price').value)||0;
+  d.players[1].name=document.getElementById('edit-p2-name').value.trim();
+  d.players[1].decklink=document.getElementById('edit-p2-link').value.trim();
+  d.players[1].deckPrice=parseFloat(document.getElementById('edit-p2-price').value)||0;
+  closeEditModal();markDirty();renderDuplaList();
+}
+document.addEventListener('click',e=>{if(e.target===document.getElementById('edit-modal'))closeEditModal();});
+
+// ══════════════════════════════════════════════════════
+//  START TOURNAMENT
+// ══════════════════════════════════════════════════════
+function startTournament(){
+  const existing=getActiveTournament();
+  if(existing&&existing.status==='ongoing'){
+    alert('Já existe um torneio em andamento. Finalize-o antes de iniciar um novo.');return;
+  }
+  const name=document.getElementById('cfg-name').value.trim();
+  const date=document.getElementById('cfg-date').value;
+  const maxRounds=parseInt(document.getElementById('cfg-rounds').value)||4;
+  const organizer=document.getElementById('cfg-organizer').value.trim();
+  const pairing=document.querySelector('input[name=pairing]:checked').value;
+  const timerMinutes=parseInt(document.getElementById('cfg-timer').value)||70;
+
+  if(!name){alert('Digite o nome do torneio.');return;}
+  if(state.pendingDuplas.length<2){alert('Adicione ao menos 2 duplas. ('+state.pendingDuplas.length+' cadastradas)');return;}
+
+  const t={
+    id:'tournament_'+Date.now(),
+    name,date,maxRounds,organizer,pairing,timerMinutes,
+    status:'ongoing',
+    duplas:JSON.parse(JSON.stringify(state.pendingDuplas)),
+    rounds:[]
+  };
+  const firstMatches=generateSwissPairings(t,0);
+  t.rounds.push({roundNumber:1,status:'pending',matches:firstMatches});
+  state.tournaments.push(t);
+  state.pendingDuplas=[];
+  activeTournamentId=t.id;
+  updateHeaderTitle(t);
+  markDirty();
+  renderTournamentList();
+  switchTab('rounds');
+}
+
+// ══════════════════════════════════════════════════════
+//  TIMERS
+// ══════════════════════════════════════════════════════
+function timerKey(ri,mi){return ri+'-'+mi;}
+
+function startTimer(ri,mi){
+  const key=timerKey(ri,mi);
+  const t=getActiveTournament();
+  const mins=t?.timerMinutes||70;
+  if(!timers[key]) timers[key]={remaining:mins*60,running:false};
+  if(timers[key].running) return;
+  timers[key].running=true;
+  timers[key].intervalId=setInterval(()=>{
+    if(timers[key].remaining>0){
+      timers[key].remaining--;
+      updateTimerDisplay(ri,mi);
+    } else {
+      clearInterval(timers[key].intervalId);
+      timers[key].running=false;
+      updateTimerDisplay(ri,mi);
+    }
+  },1000);
+  updateTimerDisplay(ri,mi);
+}
+
+function pauseTimer(ri,mi){
+  const key=timerKey(ri,mi);
+  if(!timers[key]) return;
+  clearInterval(timers[key].intervalId);
+  timers[key].running=false;
+  updateTimerDisplay(ri,mi);
+}
+
+function resetTimer(ri,mi){
+  const key=timerKey(ri,mi);
+  const t=getActiveTournament();
+  const mins=t?.timerMinutes||70;
+  if(timers[key]){clearInterval(timers[key].intervalId);}
+  timers[key]={remaining:mins*60,running:false};
+  updateTimerDisplay(ri,mi);
+}
+
+function updateTimerDisplay(ri,mi){
+  const key=timerKey(ri,mi);
+  const el=document.getElementById('timer-'+key);
+  if(!el) return;
+  const tm=timers[key];
+  if(!tm){el.textContent='--:--';return;}
+  const m=Math.floor(tm.remaining/60);
+  const s=tm.remaining%60;
+  el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  el.className='timer-display'+(tm.remaining===0?' expired':tm.remaining<600?' warning':'');
+  // Update buttons
+  const startBtn=document.getElementById('timer-start-'+key);
+  const pauseBtn=document.getElementById('timer-pause-'+key);
+  if(startBtn) startBtn.style.display=tm.running?'none':'inline-flex';
+  if(pauseBtn) pauseBtn.style.display=tm.running?'inline-flex':'none';
+}
+
+function initTimerDisplay(ri,mi){
+  const key=timerKey(ri,mi);
+  const t=getActiveTournament();
+  const mins=t?.timerMinutes||70;
+  if(!timers[key]) timers[key]={remaining:mins*60,running:false};
+  // Don't reset if already ticking
+  setTimeout(()=>updateTimerDisplay(ri,mi),0);
+}
+
+// ══════════════════════════════════════════════════════
+//  ROUNDS TAB
+// ══════════════════════════════════════════════════════
+function renderRounds(){
+  const container=document.getElementById('rounds-container');
+  const t=getActiveTournament();
+  if(!t){container.innerHTML='<div class="empty-state">Inicie um torneio na aba Configuração.</div>';return;}
+  container.innerHTML=(t.rounds||[]).map((r,ri)=>renderRoundCard(t,r,ri)).join('');
+  // Init all timer displays without resetting running ones
+  t.rounds.forEach((r,ri)=>r.matches.forEach((_,mi)=>initTimerDisplay(ri,mi)));
+}
+
+function renderRoundCard(t,r,ri){
+  const locked=r.status==='finished';
+  const allDone=r.matches.every(m=>m.duplaB==='BYE'||(m.winsA!==null&&m.winsA!==undefined));
+  const isLastRound=ri===t.rounds.length-1;
+  const allRoundsDone=t.rounds.length>=t.maxRounds&&t.rounds.every(rr=>rr.status==='finished');
+  return`
+  <div class="round-card" id="round-card-${ri}">
+    <div class="round-header">
+      <div class="round-title">Rodada ${r.roundNumber} de ${t.maxRounds}</div>
+      <div class="flex-row">
+        ${locked?`<span class="round-badge badge-done">✓ Encerrada</span>`:`<span class="round-badge badge-pending">Em andamento</span>`}
+        ${!locked&&allDone?`<button class="btn btn-green btn-sm" onclick="lockRound(${ri})">Encerrar Rodada</button>`:''}
+      </div>
+    </div>
+    ${r.matches.map((m,mi)=>renderMatchItem(t,r,m,mi,ri,locked)).join('')}
+    ${locked&&isLastRound&&t.rounds.length<t.maxRounds?`
+      <div style="padding:10px 14px;border-top:1px solid var(--border)">
+        <button class="btn btn-gold btn-sm" onclick="nextRound()">⚔ Gerar Rodada ${ri+2}</button>
+      </div>`:''}
+    ${allRoundsDone&&t.status==='ongoing'?`
+      <div style="padding:10px 14px;border-top:1px solid var(--border)">
+        <button class="btn btn-gold btn-sm" onclick="finishTournament()">🏆 Finalizar Torneio</button>
+      </div>`:''}
+  </div>`;
+}
+
+function renderMatchItem(t,r,m,mi,ri,locked){
+  const da=getDuplaById(t,m.duplaA);
+  const isBye=m.duplaB==='BYE';
+  const db=isBye?null:getDuplaById(t,m.duplaB);
+  const hasPts=m.winsA!==null&&m.winsA!==undefined;
+  const{ptsA,ptsB}=hasPts?calcPoints(m.winsA,m.winsB,m.timeout):{ptsA:0,ptsB:0};
+  const key=timerKey(ri,mi);
+
+  let resultBadge='';
+  if(hasPts&&!isBye){
+    if(m.winsA>m.winsB) resultBadge=`<span class="match-result-badge" style="background:rgba(76,173,110,.12);border:1px solid var(--green);color:var(--green)">${da?.name} venceu</span>`;
+    else if(m.winsB>m.winsA) resultBadge=`<span class="match-result-badge" style="background:rgba(76,173,110,.12);border:1px solid var(--green);color:var(--green)">${db?.name} venceu</span>`;
+    else resultBadge=`<span class="match-result-badge" style="background:rgba(74,200,192,.1);border:1px solid var(--teal);color:var(--teal)">Empate</span>`;
+  }
+
+  if(isBye) return`<div class="match-item">
+    <div class="match-label">Partida ${mi+1} — BYE</div>
+    <div style="font-size:12px;color:var(--text-muted);font-style:italic">${da?.name||'?'} descansa esta rodada.</div>
+  </div>`;
+
+  const timerHtml=!locked?`
+    <div class="timer-row">
+      <span class="timer-display" id="timer-${key}">--:--</span>
+      <span class="timer-label">Tempo de partida</span>
+      <button class="btn btn-outline btn-sm" id="timer-start-${key}" onclick="startTimer(${ri},${mi})">▶ Iniciar</button>
+      <button class="btn btn-outline btn-sm" id="timer-pause-${key}" style="display:none" onclick="pauseTimer(${ri},${mi})">⏸ Pausar</button>
+      <button class="btn btn-outline btn-sm" onclick="resetTimer(${ri},${mi})">↺</button>
+    </div>`:'';
+
+  return`
+  <div class="match-item${locked?' match-locked':''}">
+    <div class="match-label">Partida ${mi+1} ${resultBadge}</div>
+    <div class="match-row">
+      <div class="team-box">
+        <span class="dot" style="background:${da?.color||'#555'}"></span>
+        <span class="team-name">${da?.name||'?'}</span>
+        ${hasPts?`<div class="team-pts">+${ptsA} pts</div>`:''}
+      </div>
+      <div class="vs">VS</div>
+      <div class="team-box">
+        <span class="dot" style="background:${db?.color||'#555'}"></span>
+        <span class="team-name">${db?.name||'?'}</span>
+        ${hasPts?`<div class="team-pts">+${ptsB} pts</div>`:''}
+      </div>
+    </div>
+    ${timerHtml}
+    ${!locked?`
+    <div class="score-inputs">
+      <input class="score-input" type="number" min="0" max="2" id="score-a-${ri}-${mi}" value="${hasPts?m.winsA:''}" placeholder="0"/>
+      <span class="score-sep">×</span>
+      <input class="score-input" type="number" min="0" max="2" id="score-b-${ri}-${mi}" value="${hasPts?m.winsB:''}" placeholder="0"/>
+    </div>
+    <label class="timeout-check">
+      <input type="checkbox" id="timeout-${ri}-${mi}" ${m.timeout?'checked':''}/> Tempo esgotado
+    </label>
+    <div class="match-actions">
+      <button class="btn btn-gold btn-sm" onclick="registerResult(${ri},${mi})">Registrar Resultado</button>
+      ${hasPts?`<button class="btn btn-outline btn-sm" onclick="clearResult(${ri},${mi})">Limpar</button>`:''}
+    </div>`:`
+    <div class="score-inputs" style="pointer-events:none">
+      <input class="score-input" type="number" value="${m.winsA}" readonly style="opacity:.6"/>
+      <span class="score-sep">${m.timeout?'⏱':'×'}</span>
+      <input class="score-input" type="number" value="${m.winsB}" readonly style="opacity:.6"/>
+    </div>`}
+  </div>`;
+}
+
+function registerResult(ri,mi){
+  const t=getActiveTournament();if(!t)return;
+  const m=t.rounds[ri].matches[mi];
+  const a=parseInt(document.getElementById(`score-a-${ri}-${mi}`).value);
+  const b=parseInt(document.getElementById(`score-b-${ri}-${mi}`).value);
+  const timeout=document.getElementById(`timeout-${ri}-${mi}`).checked;
+  if(isNaN(a)||isNaN(b)){alert('Preencha os resultados.');return;}
+  if(a<0||b<0||a>2||b>2){alert('Valores válidos: 0 a 2.');return;}
+  if(!timeout&&a+b>3){alert('Máximo de 3 jogos no total.');return;}
+  m.winsA=a;m.winsB=b;m.timeout=timeout;
+  // Stop timer on result
+  pauseTimer(ri,mi);
+  markDirty();renderRounds();
+}
+
+function clearResult(ri,mi){
+  const t=getActiveTournament();if(!t)return;
+  const m=t.rounds[ri].matches[mi];
+  m.winsA=null;m.winsB=null;m.timeout=false;
+  markDirty();renderRounds();
+}
+
+function lockRound(ri){
+  const t=getActiveTournament();if(!t)return;
+  t.rounds[ri].status='finished';
+  markDirty();renderRounds();renderStandings();
+}
+
+function nextRound(){
+  const t=getActiveTournament();if(!t)return;
+  const nextIdx=t.rounds.length;
+  t.rounds.push({roundNumber:nextIdx+1,status:'pending',matches:generateSwissPairings(t,nextIdx)});
+  markDirty();renderRounds();
+}
+
+function finishTournament(){
+  const t=getActiveTournament();if(!t)return;
+  if(!confirm('Finalizar o torneio "'+t.name+'"? As duplas da Configuração serão limpas.'))return;
+  t.status='finished';
+  activeTournamentId=null;
+  state.pendingDuplas=[];
+  markDirty();
+  renderDuplaList();
+  renderTournamentList();
+  switchTab('standings');
+}
+
+// ══════════════════════════════════════════════════════
+//  STANDINGS TAB
+// ══════════════════════════════════════════════════════
+function renderStandings(){
+  const container=document.getElementById('standings-container');
+  const t=getActiveTournament()||[...state.tournaments].reverse().find(t=>t.status==='finished');
+  if(!t){container.innerHTML='<div class="empty-state">Nenhum torneio ativo.</div>';return;}
+
+  const rows=getTournamentStandings(t);
+  if(!rows.length){container.innerHTML='<div class="empty-state">Nenhum resultado ainda.</div>';return;}
+
+  const champion=t.status==='finished'?rows[0]:null;
+  const podiumColors=['#ffd700','#c0c0c0','#cd7f32'];
+  const h2h=buildH2H(t);
+
+  // ── Main table ──
+  const mainTable=`
+  <div class="card">
+    <div class="card-title">Classificação — ${t.name}</div>
+    <table class="standings-table">
+      <thead><tr>
+        <th>#</th><th>Dupla</th><th>Pts</th><th>V/E/D</th><th>Jogos</th><th>Jogadores</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map((r,i)=>`<tr>
+          <td><div class="rank-num" style="color:${i<3?podiumColors[i]:'var(--text-muted)'}">${i<3?['1º','2º','3º'][i]:(i+1)+'º'}</div></td>
+          <td><span style="display:inline-flex;align-items:center;gap:7px">
+            <span style="width:9px;height:9px;border-radius:50%;background:${r.color};display:inline-block;flex-shrink:0"></span>
+            <b>${r.name}</b>
+          </span></td>
+          <td><span class="pts-val">${r.pts}</span></td>
+          <td><span class="wld">${r.wins}/${r.draws}/${r.losses}</span></td>
+          <td><span class="wld">${r.gameWins}–${r.gameLosses}</span></td>
+          <td style="font-size:11px;color:var(--text-muted)">${(getDuplaById(t,r.id)?.players||[]).map(p=>p.name).filter(Boolean).join(' & ')||'—'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+
+  // ── TB detail table (5 tiebreakers as per tournament rules) ──
+  const tbTable=`
+  <div class="card">
+    <div class="card-title">Detalhamento dos Desempates</div>
+    <div style="overflow-x:auto">
+    <table class="tb-table">
+      <thead><tr>
+        <th>#</th>
+        <th style="text-align:left">Dupla</th>
+        <th>Pts</th>
+        <th>TB1<br><span style="font-size:7px;font-weight:400">Pts Brutos</span></th>
+        <th>TB2<br><span style="font-size:7px;font-weight:400">Força Adv.</span></th>
+        <th>TB3<br><span style="font-size:7px;font-weight:400">Derr. Adv.</span></th>
+        <th colspan="${rows.length}" style="border-left:1px solid var(--border2)">TB4 — Confronto Direto ★</th>
+        <th>TB5<br><span style="font-size:7px;font-weight:400">Deck R$</span></th>
+      </tr>
+      <tr>
+        <th colspan="6"></th>
+        ${rows.map(r=>`<th title="${r.name}" style="border-left:1px solid var(--border2);max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px">${r.name.length>6?r.name.slice(0,6)+'…':r.name} ★</th>`).join('')}
+        <th></th>
+      </tr></thead>
+      <tbody>
+        ${rows.map((r,i)=>`<tr>
+          <td style="color:${i<3?podiumColors[i]:'var(--text-muted)'};font-family:var(--font-display);font-size:10px">${i+1}º</td>
+          <td style="text-align:left;color:var(--text);white-space:nowrap">
+            <span style="width:7px;height:7px;border-radius:50%;background:${r.color};display:inline-block;margin-right:5px;flex-shrink:0"></span>${r.name}
+          </td>
+          <td style="color:var(--gold);font-weight:700;font-family:var(--font-display)">${r.pts}</td>
+          <td style="font-size:11px;color:var(--text-dim)">${r.tb1}</td>
+          <td style="font-size:11px;color:var(--text-dim)">${r.tb2}</td>
+          <td style="font-size:11px;color:var(--text-dim)">${r.tb3}</td>
+          ${rows.map((opp,oi)=>{
+            if(oi===i) return '<td class="tb-na" style="border-left:1px solid var(--border2)">—</td>';
+            const k1=r.id+'__'+opp.id,k2=opp.id+'__'+r.id;
+            const h=h2h[k1]||h2h[k2];
+            const bL=oi===0?'border-left:1px solid var(--border2)':'';
+            if(!h) return '<td class="tb-na" style="'+bL+'">·</td>';
+            const myW=h2h[k1]?h.a:h.b,oppW=h2h[k1]?h.b:h.a;
+            if(myW>oppW) return '<td style="'+bL+'"><span class="tb-w">V</span></td>';
+            if(oppW>myW) return '<td style="'+bL+'"><span class="tb-l">D</span></td>';
+            return '<td style="'+bL+'"><span class="tb-d">E</span></td>';
+          }).join('')}
+          <td style="font-size:10px;color:var(--text-muted)">${r.deckCost?'R$'+r.deckCost.toFixed(0):'—'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>
+    <div class="tb-legend">
+      <b>TB1 — Pontos Brutos:</b> Pts totais − (partidas individuais perdidas × 10).<br>
+      <b>TB2 — Força dos Adversários:</b> soma dos pontos de cada oponente nas partidas com você.<br>
+      <b>TB3 — Derrotas dos Adversários:</b> soma das derrotas dos seus oponentes; menor soma = melhor.<br>
+      <b>TB4 — Confronto Direto:</b> quem venceu o confronto direto tem prioridade. ★ = coluna ativa.<br>
+      <b>TB5 — Deck mais barato (R$).</b>
+    </div>
+  </div>`;
+
+  container.innerHTML=`
+    ${champion?`<div class="champion-banner">
+      <div class="champion-crown">👑</div>
+      <div class="champion-label">Campeão</div>
+      <div class="champion-name">${champion.name}</div>
+      <div class="champion-pts">${champion.pts} pontos · ${t.name}</div>
+    </div>`:''}
+    ${mainTable}${tbTable}`;
+}
+
+// ══════════════════════════════════════════════════════
+//  HISTORY TAB
+// ══════════════════════════════════════════════════════
+function renderHistory(){
+  const container=document.getElementById('history-container');
+  const t=getActiveTournament()||[...state.tournaments].reverse().find(t=>t.status==='finished');
+  if(!t){container.innerHTML='<div class="empty-state">Nenhum torneio ativo.</div>';return;}
+  const finished=(t.rounds||[]).filter(r=>r.status==='finished');
+  if(!finished.length){container.innerHTML='<div class="empty-state">Nenhuma rodada encerrada ainda.</div>';return;}
+  container.innerHTML=`<div class="card">
+    <div class="card-title">Histórico — ${t.name}</div>
+    ${finished.map(r=>`
+    <div class="hist-round">
+      <div class="hist-round-label">Rodada ${r.roundNumber}</div>
+      ${r.matches.filter(m=>m.duplaB!=='BYE'&&m.winsA!==null).map(m=>{
+        const da=getDuplaById(t,m.duplaA),db=getDuplaById(t,m.duplaB);
+        const{ptsA,ptsB}=calcPoints(m.winsA,m.winsB,m.timeout);
+        const isWin=m.winsA!==m.winsB;
+        const winner=m.winsA>m.winsB?da?.name:db?.name;
+        return`<div class="hist-match">
+          <div style="color:var(--text)">${da?.name||'?'} <b>${m.winsA}×${m.winsB}</b>${m.timeout?'⏱':''} ${db?.name||'?'}</div>
+          <div style="display:flex;align-items:center;gap:7px">
+            <span class="hist-pts">+${ptsA}/+${ptsB}</span>
+            ${isWin?`<span class="hist-badge hist-win">${winner} venceu</span>`:`<span class="hist-badge hist-draw">Empate</span>`}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`).join('')}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════
+//  PERSISTENCE
+// ══════════════════════════════════════════════════════
+function saveLocal(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify({state,activeTournamentId}));
+  setStatus('Salvo — '+new Date().toLocaleTimeString('pt-BR'),'var(--green)');
+  dirty=false;
+}
+
+function exportState(){
+  const exportObj={
+    meta:{exportedAt:new Date().toISOString()},
+    tournaments:state.tournaments.map(t=>({...t,standings:getTournamentStandings(t)}))
+  };
+  const t=getActiveTournament()||state.tournaments[state.tournaments.length-1];
+  const blob=new Blob([JSON.stringify(exportObj,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`state_${(t?.name||'torneio').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  setStatus('Exportado!','var(--green)');
+}
+
+function importState(){document.getElementById('import-file').click();}
+
+function handleImport(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const imported=JSON.parse(ev.target.result);
+      if(imported.state){
+        state=imported.state;activeTournamentId=imported.activeTournamentId||null;
+      } else {
+        state={tournaments:imported.tournaments||[],pendingDuplas:[],pendingConfig:{}};
+        const ongoing=state.tournaments.find(t=>t.status==='ongoing');
+        activeTournamentId=ongoing?ongoing.id:null;
+      }
+      if(!state.pendingDuplas) state.pendingDuplas=[];
+      const t=getActiveTournament();
+      if(t) updateHeaderTitle(t);
+      renderDuplaList();
+      setStatus('Importado!','var(--teal)');
+    }catch(err){alert('Erro ao importar: '+err.message);}
+  };
+  reader.readAsText(file);e.target.value='';
+}
+
+function resetAll(){
+  if(!confirm('Resetar tudo? Esta ação não pode ser desfeita.'))return;
+  // Stop all timers
+  Object.values(timers).forEach(tm=>{if(tm.intervalId)clearInterval(tm.intervalId);});
+  Object.keys(timers).forEach(k=>delete timers[k]);
+  state={tournaments:[],pendingDuplas:[],pendingConfig:{}};
+  activeTournamentId=null;
+  localStorage.removeItem(STORAGE_KEY);
+  updateHeaderTitle(null);
+  renderDuplaList();
+  switchTab('config');
+  setStatus('Resetado.','var(--text-muted)');
+}
+
+
+// ══════════════════════════════════════════════════════
+//  TOURNAMENT LIST PANEL
+// ══════════════════════════════════════════════════════
+let editingTournamentId = null; // id of tournament being edited (null = none)
+
+function fmtDateShort(str){
+  if(!str) return '—';
+  const d = new Date(str+'T12:00:00');
+  if(isNaN(d)) return str;
+  return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+}
+
+function renderTournamentList(){
+  const body = document.getElementById('t-list-body');
+  if(!body) return;
+  const ts = state.tournaments;
+  if(!ts || !ts.length){
+    body.innerHTML = '<div class="t-list-empty">Nenhum torneio registrado ainda.</div>';
+    return;
+  }
+  // Sort: ongoing first, then by date desc
+  const sorted = [...ts].sort((a,b)=>{
+    if(a.status==='ongoing' && b.status!=='ongoing') return -1;
+    if(b.status==='ongoing' && a.status!=='ongoing') return 1;
+    return (b.date||'').localeCompare(a.date||'');
+  });
+
+  body.innerHTML = sorted.map(t=>{
+    const isOngoing = t.status === 'ongoing';
+    const isEditing = editingTournamentId === t.id;
+    const rounds = (t.rounds||[]).filter(r=>r.status==='finished').length;
+    return `<div class="t-list-row" style="${isEditing?'background:rgba(201,168,76,.05)':''}">
+      <div class="t-list-dot ${isOngoing?'ongoing':'finished'}"></div>
+      <div class="t-list-info">
+        <div class="t-list-name">${t.name}</div>
+        <div class="t-list-meta">${fmtDateShort(t.date)} · ${t.maxRounds} rodadas · ${rounds} encerrada${rounds!==1?'s':''} · ${(t.duplas||[]).length} duplas</div>
+      </div>
+      <span class="t-list-badge ${isOngoing?'ongoing':'finished'}">${isOngoing?'Em andamento':'Encerrado'}</span>
+      <div class="t-list-actions">
+        ${!isEditing
+          ? `<button class="btn btn-outline btn-sm" onclick="loadTournamentForEdit('${t.id}')" title="Editar nomes e decklists">✎ Editar</button>`
+          : `<button class="btn btn-gold btn-sm" onclick="saveEditTournament()">Salvar</button>`}
+        ${isOngoing
+          ? `<button class="btn btn-outline btn-sm" onclick="resumeTournament('${t.id}')" title="Retomar torneio">▶ Retomar</button>`
+          : ''}
+        <button class="btn btn-danger btn-sm" onclick="deleteTournament('${t.id}')" title="Excluir">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function resumeTournament(id){
+  if(activeTournamentId && activeTournamentId !== id){
+    alert('Já existe um torneio em andamento. Finalize-o antes de retomar outro.');
+    return;
+  }
+  activeTournamentId = id;
+  const t = getActiveTournament();
+  if(!t) return;
+  updateHeaderTitle(t);
+  document.getElementById('cfg-name').value = t.name||'';
+  document.getElementById('cfg-date').value = t.date||'';
+  document.getElementById('cfg-rounds').value = t.maxRounds||4;
+  document.getElementById('cfg-organizer').value = t.organizer||'';
+  document.getElementById('cfg-timer').value = t.timerMinutes||70;
+  markDirty();
+  switchTab('rounds');
+}
+
+function deleteTournament(id){
+  const t = state.tournaments.find(t=>t.id===id);
+  if(!t) return;
+  if(!confirm('Excluir o torneio "'+t.name+'"? Esta ação não pode ser desfeita.')) return;
+  state.tournaments = state.tournaments.filter(t=>t.id!==id);
+  if(activeTournamentId === id) activeTournamentId = null;
+  if(editingTournamentId === id) cancelEditTournament();
+  markDirty();
+  renderTournamentList();
+  renderDuplaList();
+}
+
+// ── Edit mode ──
+// Editing stores a deep copy; only names/decklists are applied back on save
+let _editSnapshot = null;
+
+function loadTournamentForEdit(id){
+  const t = state.tournaments.find(t=>t.id===id);
+  if(!t) return;
+
+  // Cancel any previous edit
+  cancelEditTournament(true);
+
+  editingTournamentId = id;
+  _editSnapshot = JSON.parse(JSON.stringify(t)); // deep copy for cancel
+
+  // Populate config fields (read-only display — user edits dupla cards inline)
+  document.getElementById('cfg-name').value = t.name||'';
+  document.getElementById('cfg-date').value = t.date||'';
+  document.getElementById('cfg-rounds').value = t.maxRounds||4;
+  document.getElementById('cfg-organizer').value = t.organizer||'';
+  document.getElementById('cfg-timer').value = t.timerMinutes||70;
+
+  // Show banner
+  const banner = document.getElementById('edit-banner');
+  banner.classList.add('visible');
+  document.getElementById('edit-banner-name').textContent = t.name;
+
+  // Hide Iniciar button while editing
+  const wrap = document.getElementById('iniciar-btn-wrap');
+  if(wrap) wrap.style.display = 'none';
+
+  // Point getDuplaList at this tournament's duplas for the add/edit/delete flow
+  // We do this by temporarily setting activeTournamentId if not already ongoing
+  if(!activeTournamentId) activeTournamentId = id;
+
+  renderDuplaList();
+  renderTournamentList();
+
+  // Scroll to dupla list
+  document.getElementById('dupla-list')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function saveEditTournament(){
+  if(!editingTournamentId) return;
+  const t = state.tournaments.find(t=>t.id===editingTournamentId);
+  if(!t) return;
+
+  // Apply name/organizer edits from config fields
+  t.name = document.getElementById('cfg-name').value.trim()||t.name;
+  t.organizer = document.getElementById('cfg-organizer').value.trim();
+
+  // Duplas already mutated in-place via the dupla edit flow
+  // Scores/rounds are untouched
+
+  _editSnapshot = null;
+  const wasFinished = t.status === 'finished';
+
+  // If this was a finished tournament, don't set it as activeTournamentId
+  if(wasFinished && activeTournamentId === editingTournamentId){
+    activeTournamentId = null;
+  }
+
+  editingTournamentId = null;
+  finishEditMode();
+  updateHeaderTitle(getActiveTournament());
+  markDirty();
+  renderTournamentList();
+  renderDuplaList();
+  setStatus('Edições salvas.','var(--green)');
+}
+
+function cancelEditTournament(silent){
+  if(!editingTournamentId) return;
+
+  // Restore snapshot
+  if(_editSnapshot){
+    const idx = state.tournaments.findIndex(t=>t.id===editingTournamentId);
+    if(idx!==-1) state.tournaments[idx] = _editSnapshot;
+    _editSnapshot = null;
+  }
+
+  const wasFinished = state.tournaments.find(t=>t.id===editingTournamentId)?.status === 'finished';
+  if(wasFinished && activeTournamentId === editingTournamentId){
+    activeTournamentId = null;
+  }
+
+  editingTournamentId = null;
+  finishEditMode();
+  renderTournamentList();
+  renderDuplaList();
+  if(!silent) setStatus('Edição cancelada.','var(--text-muted)');
+}
+
+function finishEditMode(){
+  const banner = document.getElementById('edit-banner');
+  if(banner) banner.classList.remove('visible');
+  const wrap = document.getElementById('iniciar-btn-wrap');
+  if(wrap) wrap.style.display = '';
+}
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+function setScrollTop(){
+  const fixed=document.getElementById('app-fixed');
+  if(fixed){
+    const h=fixed.getBoundingClientRect().height;
+    document.getElementById('app-scroll').style.top=h+'px';
+  }
+}
+
+function init(){
+  document.getElementById('cfg-date').value=new Date().toISOString().slice(0,10);
+  renderColorPicker();
+  // Set after fonts load
+  setTimeout(setScrollTop,200);
+  window.addEventListener('resize',setScrollTop);
+
+  const saved=localStorage.getItem(STORAGE_KEY);
+  if(saved){
+    try{
+      const parsed=JSON.parse(saved);
+      state=parsed.state||{tournaments:[],pendingDuplas:[],pendingConfig:{}};
+      activeTournamentId=parsed.activeTournamentId||null;
+      if(!state.pendingDuplas) state.pendingDuplas=[];
+      const t=getActiveTournament();
+      if(t){
+        updateHeaderTitle(t);
+        document.getElementById('cfg-name').value=t.name||'';
+        document.getElementById('cfg-date').value=t.date||'';
+        document.getElementById('cfg-rounds').value=t.maxRounds||4;
+        document.getElementById('cfg-organizer').value=t.organizer||'';
+        document.getElementById('cfg-timer').value=t.timerMinutes||70;
+      }
+      setStatus('Estado restaurado.','var(--text-muted)');
+    }catch(e){
+      state={tournaments:[],pendingDuplas:[],pendingConfig:{}};
+      activeTournamentId=null;
+    }
+  }
+  renderDuplaList();
+  renderTournamentList();
+}
+
+setInterval(()=>{if(dirty)saveLocal();},60000);
+init();
+</script>
+</body>
+</html>

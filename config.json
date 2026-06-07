@@ -1,0 +1,12 @@
+{
+  "gymName": "Eagles",
+  "themeAccent": "#c9a84c",
+  "themeAccentText": "#000000",
+  "organizer": "",
+  "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap",
+  "fontFamily": "'Cinzel', serif",
+  "scheduleTitle": "Eagles — Agenda",
+  "leaderboardTitle": "Eagles — Leaderboard",
+  "appTitle": "Eagles — Torneios",
+  "logo": ""
+}
