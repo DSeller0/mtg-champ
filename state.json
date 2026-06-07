@@ -1,6 +1,6 @@
 {
   "meta": {
-    "exportedAt": "2026-06-07T15:47:01.099630Z"
+    "exportedAt": "2026-06-07T15:51:57.040742+00:00"
   },
   "tournaments": [
     {
@@ -1922,6 +1922,264 @@
           "wins": 0
         }
       ]
+    },
+    {
+      "id": "tournament_1710000000",
+      "name": "Liga Cone #4",
+      "date": "2025-11-09",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "ongoing",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 290.07
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 184.04
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 172.98
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 209.18
+            }
+          ],
+          "confirmed": false
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 475.14
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 210.6
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 279.2
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 435.84
+            }
+          ],
+          "confirmed": true
+        }
+      ],
+      "rounds": [],
+      "standings": []
+    },
+    {
+      "id": "tournament_1711000000",
+      "name": "Liga Cone #5",
+      "date": "2025-12-14",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "ongoing",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 299.25
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 398.87
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 192.68
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 549.04
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 274.47
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 281.82
+            }
+          ],
+          "confirmed": false
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 434.83
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 159.18
+            }
+          ],
+          "confirmed": false
+        }
+      ],
+      "rounds": [],
+      "standings": []
+    },
+    {
+      "id": "tournament_1712000000",
+      "name": "Grand Prix Fim de Ano",
+      "date": "2026-01-11",
+      "maxRounds": 4,
+      "organizer": "Cone",
+      "pairing": "auto",
+      "timerMinutes": 70,
+      "status": "ongoing",
+      "duplas": [
+        {
+          "id": "d_alpha",
+          "name": "Alpha Strike",
+          "color": "#c94c4c",
+          "players": [
+            {
+              "name": "Ricardo",
+              "decklink": "https://moxfield.com/decks/alpha1",
+              "deckPrice": 572.37
+            },
+            {
+              "name": "Thiago",
+              "decklink": "https://moxfield.com/decks/alpha2",
+              "deckPrice": 354.93
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_beta",
+          "name": "Beta Decay",
+          "color": "#4c7ec9",
+          "players": [
+            {
+              "name": "Marcos",
+              "decklink": "https://moxfield.com/decks/beta1",
+              "deckPrice": 482.73
+            },
+            {
+              "name": "Felipe",
+              "decklink": "https://moxfield.com/decks/beta2",
+              "deckPrice": 323.9
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_gamma",
+          "name": "Gamma Ray",
+          "color": "#4cad6e",
+          "players": [
+            {
+              "name": "Lucas",
+              "decklink": "https://moxfield.com/decks/gamma1",
+              "deckPrice": 289.36
+            },
+            {
+              "name": "André",
+              "decklink": "https://moxfield.com/decks/gamma2",
+              "deckPrice": 220.09
+            }
+          ],
+          "confirmed": true
+        },
+        {
+          "id": "d_delta",
+          "name": "Delta Force",
+          "color": "#c9a84c",
+          "players": [
+            {
+              "name": "Vinícius",
+              "decklink": "https://moxfield.com/decks/delta1",
+              "deckPrice": 83.96
+            },
+            {
+              "name": "Gabriel",
+              "decklink": "https://moxfield.com/decks/delta2",
+              "deckPrice": 185.96
+            }
+          ],
+          "confirmed": false
+        }
+      ],
+      "rounds": [],
+      "standings": []
     }
   ]
 }
